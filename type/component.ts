@@ -25,6 +25,7 @@ export interface AlertScreenProps {
   title: string;
   description: string;
   variant: "default" | "destructive";
+  button?: ReactNode;
 }
 
 export interface LoadingScreenProps {
