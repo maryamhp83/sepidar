@@ -73,7 +73,7 @@ export default function LoginForm({ className }: ClassOnlyProps) {
       const email = form.getValues("email");
 
       try {
-        // await recoveryMutation.mutateAsync(email);
+        await recoveryMutation.mutateAsync(email);
 
         toast.success("عملیات موفقیت امیز بود", {
           description:
@@ -91,13 +91,12 @@ export default function LoginForm({ className }: ClassOnlyProps) {
   return (
     <Card className={className}>
       <CardHeader>
-        <CardTitle>به خُرده خوش آمدید</CardTitle>
+        <CardTitle>به سپیدار خوش آمدید</CardTitle>
         <CardDescription>
-          برای مدیریت فروش، بررسی موجودی کالاها و تحلیل سود و زیان فروشگاه خود
-          وارد حساب کاربری شوید.
+          برای مدیریت بیماران، پزشکان، نوبت‌های مراجعه، فرایند بستری و امور
+          اداری و مالی بیمارستان، وارد حساب کاربری خود شوید.
         </CardDescription>
       </CardHeader>
-
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="px-5.5 space-y-4 mb-8">
           <Controller
