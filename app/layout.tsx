@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { ChildrenOnlyProps } from "@/type/component";
 import { JetBrains_Mono, Vazirmatn } from "next/font/google";
-import "@/app/global.css";
+import "@/app/globals.css";
 import { DirectionProvider } from "@/component/ui/direction";
 import { cn } from "cn";
 import { ThemeProvider } from "next-themes";
