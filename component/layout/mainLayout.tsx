@@ -7,11 +7,15 @@ import Navbar from "../navbar";
 import Header from "../header";
 import { useState } from "react";
 
-export default function MainLayout({ children, className }: MainLayoutProps) {
+export default function MainLayout({
+  children,
+  className,
+  mode = "auth-only",
+}: MainLayoutProps) {
   const [navbarCollapsed, setNavbarCollapsed] = useState(false);
 
   return (
-    <AuthGuard mode="auth-only">
+    <AuthGuard mode={mode}>
       <div className={cn("flex h-dvh overflow-hidden", className)}>
         <Navbar
           className="shrink-0"
@@ -20,7 +24,9 @@ export default function MainLayout({ children, className }: MainLayoutProps) {
         />
         <div className="col-span-4 flex-1">
           <Header open={navbarCollapsed} onOpenChange={setNavbarCollapsed} />
-          <div className="p-4">{children}</div>
+          <div className="p-4 h-[calc(100dvh-75px)] overflow-auto">
+            {children}
+          </div>
         </div>
       </div>
     </AuthGuard>

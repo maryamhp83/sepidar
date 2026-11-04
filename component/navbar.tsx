@@ -95,16 +95,16 @@ export default function Navbar({
   return (
     <>
       <div
-        data-open={open}
+        data-open={!open}
         className={cn(
           "lg:hidden block transition-all duration-500 fixed top-0 left-0 z-20 bg-background/10 backdrop-blur-2xl size-full",
           "data-[open=false]:invisible data-[open=true]:visible data-[open=false]:opacity-0 data-[open=true]:opacity-100",
         )}
-        onClick={() => onOpenChange?.(false)}
+        onClick={() => onOpenChange?.(!open)}
       />
 
       <nav
-        data-open={open}
+        data-open={!open}
         className={cn(
           "border-l border-input bg-background h-dvh overflow-auto flex flex-col transition-all duration-500 z-30",
           "lg:static fixed top-0 right-0 lg:data-[open=false]:w-auto data-[open=false]:w-0 lg:data-[open=true]:w-auto data-[open=true]:w-fit",

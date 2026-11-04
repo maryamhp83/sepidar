@@ -40,6 +40,7 @@ export interface StaticBreadCrumbProps {
 export interface MainLayoutProps {
   className?: string;
   children: ReactNode;
+  mode?: "auth-only" | "disabled" | "no-auth-only";
 }
 
 export interface DialogProps {
