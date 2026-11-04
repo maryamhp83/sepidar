@@ -36,3 +36,8 @@ export interface StaticBreadCrumbProps {
   className?: string;
   values: string[];
 }
+
+export interface MainLayoutProps {
+  className?: string;
+  children: ReactNode;
+}
