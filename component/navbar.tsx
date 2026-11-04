@@ -93,7 +93,7 @@ export default function Navbar({ className }: ClassOnlyProps) {
     <nav
       data-collapsed={collapsed}
       className={cn(
-        "border-l border-input bg-background h-dvh overflow-auto flex flex-col transition-all",
+        "border-l border-input bg-background h-dvh overflow-auto flex flex-col",
         className,
       )}
     >

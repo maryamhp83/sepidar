@@ -41,3 +41,8 @@ export interface MainLayoutProps {
   className?: string;
   children: ReactNode;
 }
+
+export interface DialogProps {
+  open: boolean;
+  onOpenChange?: (open: boolean) => void;
+}

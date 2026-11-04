@@ -109,7 +109,7 @@ export default function Layout({ children }: ChildrenOnlyProps) {
     >
       <body>
         <QueryClientProvider>
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <ThemeProvider>
             <DirectionProvider direction="rtl">
               <Toaster richColors />
               {children}

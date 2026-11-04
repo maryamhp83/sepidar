@@ -12,7 +12,7 @@ export default function ThemeToggler({ className }: ClassOnlyProps) {
     <Button
       variant={"secondary"}
       className={className}
-      size="icon"
+      size="icon-lg"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       <SunMoon />
