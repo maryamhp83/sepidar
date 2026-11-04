@@ -52,3 +52,31 @@ export interface NavbarStateProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+export interface StatusCardProps {
+  title: string;
+  icon: {
+    element: ReactNode;
+    color: `text-${string}`;
+  };
+  className?: string;
+  amount: number;
+  unit?: "toman" | "people" | "none";
+}
+
+export interface AppointmentsChartCardProps {
+  className?: string;
+  data: {
+    month: string;
+    newPatient: number;
+    appointment: number;
+  }[];
+}
+
+export interface BedOccupancyCardProps {
+  className?: string;
+  data: {
+    totalBeds: number;
+    occupiedBeds: number;
+  };
+}
