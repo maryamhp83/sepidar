@@ -1,12 +1,18 @@
 "use client";
 
 import { currentFormattedDate } from "@/lib/date";
-import { ClassOnlyProps } from "@/type/component";
+import { ClassOnlyProps, NavbarStateProps } from "@/type/component";
 import { cn } from "cn";
 import ThemeToggler from "./themeToggler";
 import ProfileDropdown from "./profileDropdDown";
+import { Button } from "./ui/button";
+import { PanelLeftClose, PanelRightOpen } from "lucide-react";
 
-export default function Header({ className }: ClassOnlyProps) {
+export default function Header({
+  className,
+  open,
+  onOpenChange,
+}: ClassOnlyProps & NavbarStateProps) {
   return (
     <header
       className={cn(
@@ -20,7 +26,15 @@ export default function Header({ className }: ClassOnlyProps) {
           {currentFormattedDate}
         </span>
       </div>
-      <div className="flex items-center justify-end gap-3 shrink-0">
+      <div className="flex items-center justify-end gap-1 shrink-0">
+        <Button
+          onClick={() => onOpenChange?.(!open)}
+          size="icon-lg"
+          variant={"secondary"}
+          className={"lg:hidden flex"}
+        >
+          {open ? <PanelRightOpen /> : <PanelLeftClose />}
+        </Button>
         <ThemeToggler />
         <ProfileDropdown />
       </div>

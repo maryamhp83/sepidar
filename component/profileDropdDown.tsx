@@ -45,7 +45,7 @@ export default function ProfileDropdown({ className }: ClassOnlyProps) {
                     </AvatarFallback>
                     <AvatarBadge className="bg-green-500" />
                   </Avatar>
-                  <div className="flex-1 overflow-hidden">
+                  <div className="flex-1 overflow-hidden lg:block hidden">
                     <span className="font-normal block truncate text-xs text-right">
                       {userData.data.name}
                     </span>
@@ -54,7 +54,7 @@ export default function ProfileDropdown({ className }: ClassOnlyProps) {
                     </span>
                   </div>
                 </div>
-                <ChevronDown className="shrink-0" />
+                <ChevronDown className="shrink-0 lg:block hidden" />
               </Button>
             }
           />
