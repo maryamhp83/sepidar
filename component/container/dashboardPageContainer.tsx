@@ -11,7 +11,8 @@ import {
 import StatusCard from "@/component/statusCard";
 import { AppointmentsChartCard } from "@/component/card/dashboard/appointmentsChartCard";
 import BedOccupancyCard from "@/component/card/dashboard/bedOccupancyCard";
-import RecentAppotinmetsTable from "../table/recentAppointmentsTable";
+import RecentAppotinmetsTable from "../table/dashboard/recentAppointmentsTable";
+import RecentHospitolizedTable from "../table/dashboard/recentHospitolizedTable";
 
 export default function DashboardPageContainer() {
   return (
@@ -122,27 +123,9 @@ export default function DashboardPageContainer() {
               status: "done",
             },
             {
-              name: "سارا محمدی",
-              doctor: "دکتر فاطمه کریمی",
-              dateAndTime: "2026-11-07T10:30:00.000Z",
-              status: "scheduled",
-            },
-            {
               name: "امیر حسینی",
               doctor: "دکتر رضا موسوی",
               dateAndTime: "2026-11-07T11:00:00.000Z",
-              status: "scheduled",
-            },
-            {
-              name: "نگار مرادی",
-              doctor: "دکتر محمد احمدی",
-              dateAndTime: "2026-11-06T14:00:00.000Z",
-              status: "done",
-            },
-            {
-              name: "پارسا کریمی",
-              doctor: "دکتر سارا جعفری",
-              dateAndTime: "2026-11-08T08:30:00.000Z",
               status: "scheduled",
             },
             {
@@ -151,41 +134,37 @@ export default function DashboardPageContainer() {
               dateAndTime: "2026-11-06T16:00:00.000Z",
               status: "cancled",
             },
+          ]}
+        />
+        <RecentHospitolizedTable
+          className="lg:col-span-3"
+          data={[
             {
-              name: "آرین رضایی",
-              doctor: "دکتر رضا موسوی",
-              dateAndTime: "2026-11-08T09:30:00.000Z",
-              status: "scheduled",
-            },
-            {
-              name: "هستی نادری",
-              doctor: "دکتر سارا جعفری",
-              dateAndTime: "2026-11-05T12:00:00.000Z",
-              status: "done",
-            },
-            {
-              name: "کیان شریفی",
+              name: "علی رضایی",
               doctor: "دکتر محمد احمدی",
-              dateAndTime: "2026-11-09T10:00:00.000Z",
-              status: "scheduled",
+              room: {
+                roomNumber: 101,
+                bedNumber: 1,
+              },
+              status: "hospitolized",
             },
             {
-              name: "الناز مرادی",
-              doctor: "دکتر فاطمه کریمی",
-              dateAndTime: "2026-11-05T15:30:00.000Z",
-              status: "cancled",
-            },
-            {
-              name: "سامان حیدری",
+              name: "امیر حسینی",
               doctor: "دکتر رضا موسوی",
-              dateAndTime: "2026-11-04T09:00:00.000Z",
-              status: "done",
+              room: {
+                roomNumber: 103,
+                bedNumber: 1,
+              },
+              status: "ready-to-discharge",
             },
             {
-              name: "ترانه اکبری",
+              name: "پارسا کریمی",
               doctor: "دکتر سارا جعفری",
-              dateAndTime: "2026-11-10T11:30:00.000Z",
-              status: "scheduled",
+              room: {
+                roomNumber: 105,
+                bedNumber: 1,
+              },
+              status: "discharged",
             },
           ]}
         />

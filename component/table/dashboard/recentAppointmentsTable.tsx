@@ -7,21 +7,21 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "../ui/empty";
+} from "@/component/ui/empty";
 import {
   Table,
   TableBody,
   TableCell,
   TableHeader,
   TableRow,
-} from "../ui/table";
-import { Card, CardHeader, CardTitle } from "../ui/card";
+} from "@/component/ui/table";
+import { Card, CardHeader, CardTitle } from "@/component/ui/card";
 import { ChevronLeft, List } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/component/ui/button";
 import Link from "next/link";
 import { cn } from "cn";
 import { persianDateFormatter } from "@/lib/date";
-import { Badge } from "../ui/badge";
+import { Badge } from "@/component/ui/badge";
 
 export default function RecentAppotinmetsTable({
   className,
@@ -53,7 +53,7 @@ export default function RecentAppotinmetsTable({
           <CardTitle className="block truncate">نوبت‌های اخیر</CardTitle>
           <Button
             variant={"link"}
-            className={"p-0"}
+            className={"p-0 shrink-0"}
             render={
               <Link href={"/appointments"}>
                 مشاهده همه
@@ -63,11 +63,13 @@ export default function RecentAppotinmetsTable({
           />
         </CardHeader>
         <Table>
-          <TableHeader className="border-t border-input bg-background">
-            <TableCell>بیمار</TableCell>
-            <TableCell>پزشک</TableCell>
-            <TableCell>زمان</TableCell>
-            <TableCell>وضعیت</TableCell>
+          <TableHeader>
+            <TableRow className="bg-background border-t border-input">
+              <TableCell>بیمار</TableCell>
+              <TableCell>پزشک</TableCell>
+              <TableCell>زمان</TableCell>
+              <TableCell>وضعیت</TableCell>
+            </TableRow>
           </TableHeader>
           <TableBody>
             {data.map((item, index) => (
