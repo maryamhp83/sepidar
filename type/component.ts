@@ -80,3 +80,26 @@ export interface BedOccupancyCardProps {
     occupiedBeds: number;
   };
 }
+
+export interface RecentAppointmentsTableProps {
+  className?: string;
+  data: {
+    name: string;
+    doctor: string;
+    dateAndTime: string; // ISO
+    status: "done" | "scheduled" | "cancled";
+  }[];
+}
+
+export interface RecentHospitolizedTableProps {
+  className?: string;
+  data: {
+    name: string;
+    doctor: string;
+    room: {
+      roomNumber: number;
+      bedNumber: number;
+    };
+    status: "hospitolized" | "ready-to-discharge" | "discharged";
+  }[];
+}
