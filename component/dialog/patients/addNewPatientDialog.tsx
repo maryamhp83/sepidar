@@ -32,7 +32,7 @@ import {
   SelectValue,
 } from "@/component/ui/select";
 
-const departments = [
+export const departments = [
   "قلب و عروق",
   "داخلی",
   "ارتوپد",
@@ -41,7 +41,7 @@ const departments = [
   "اورژانسی",
 ] as const;
 
-const statuses = ["فعال", "غیر فعال", "در انتظار"] as const;
+export const statuses = ["فعال", "غیر فعال", "در انتظار"] as const;
 
 export default function AddNewPatientDialog({ className }: ClassOnlyProps) {
   const [open, setOpen] = useState(false);
@@ -102,7 +102,7 @@ export default function AddNewPatientDialog({ className }: ClassOnlyProps) {
           <DialogTitle>افزودن بیمار</DialogTitle>
           <DialogDescription>اطلاعات را با دقت تکمیل کنید.</DialogDescription>
         </DialogHeader>
-        <form action="#">
+        <form action="#" onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 p-6">
             <Controller
               name="fullName"

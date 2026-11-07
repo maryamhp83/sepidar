@@ -21,7 +21,7 @@ import { Button } from "@/component/ui/button";
 import Link from "next/link";
 import { cn } from "cn";
 import { Badge } from "@/component/ui/badge";
-import { formatPersianNumber } from "@/lib/number";
+import { digitsEnToFa } from "@persian-tools/persian-tools";
 
 export default function RecentHospitolizedTable({
   className,
@@ -77,8 +77,8 @@ export default function RecentHospitolizedTable({
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.doctor}</TableCell>
                 <TableCell>
-                  اتاق {formatPersianNumber(item.room.roomNumber)}، تخت{" "}
-                  {formatPersianNumber(item.room.bedNumber)}
+                  اتاق {digitsEnToFa(item.room.roomNumber)}، تخت{" "}
+                  {digitsEnToFa(item.room.bedNumber)}
                 </TableCell>
                 <TableCell>
                   <Badge

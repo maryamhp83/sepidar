@@ -1,4 +1,9 @@
 import type { ReactNode } from "react";
+import {
+  patientsDepartmentsType,
+  patientsStatusesType,
+  PatientType,
+} from "./general";
 
 export interface ChildrenOnlyProps {
   children: ReactNode;
@@ -103,3 +108,15 @@ export interface RecentHospitolizedTableProps {
     status: "hospitolized" | "ready-to-discharge" | "discharged";
   }[];
 }
+
+export interface PatientsFilterableTableProps {
+  className?: string;
+  data: PatientType[];
+}
+
+export interface EditPatientDialogProps {
+  className?: string;
+  data: PatientType;
+}
+
+export type DeletePatientDialogProps = EditPatientDialogProps;
