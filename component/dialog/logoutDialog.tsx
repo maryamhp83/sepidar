@@ -5,7 +5,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AppwriteException } from "appwrite";
 import { LogOut, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-
 import { account } from "@/lib/api/client";
 import { Button } from "../ui/button";
 import {

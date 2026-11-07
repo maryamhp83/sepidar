@@ -1,4 +1,8 @@
 import { z } from "zod";
+import {
+  verifyIranianNationalId,
+  isPhoneNumberValid,
+} from "@persian-tools/persian-tools";
 
 export const loginFormSchema = z.object({
   email: z
@@ -39,6 +43,37 @@ export const recoveryFormSchema = z
     path: ["confirmPassword"],
   });
 
+export const addNewPatientFormSchema = z.object({
+  fullName: z
+    .string()
+    .min(1, "نام و نام خانوادگی الزامی است.")
+    .min(3, "نام و نام خانوادگی باید حداقل ۳ کاراکتر باشد."),
+  nationalCode: z
+    .string()
+    .min(1, "کد ملی الزامی است.")
+    .refine(
+      (value) => verifyIranianNationalId(value),
+      "کد ملی وارد شده معتبر نیست.",
+    ),
+  phoneNumber: z
+    .string()
+    .min(1, "شماره تلفن الزامی است.")
+    .refine(
+      (value) => isPhoneNumberValid(value),
+      "شماره تلفن وارد شده معتبر نیست.",
+    ),
+  department: z.enum(
+    ["قلب و عروق", "داخلی", "ارتوپد", "اطفال", "مغز و اعصاب", "اورژانسی"],
+    {
+      message: "انتخاب بخش درمانی الزامی است.",
+    },
+  ),
+  status: z.enum(["فعال", "غیر فعال", "در انتظار"], {
+    message: "انتخاب وضعیت الزامی است.",
+  }),
+});
+
+export type addNewPatientFormType = z.infer<typeof addNewPatientFormSchema>;
 export type signupFormType = z.infer<typeof signupFormSchema>;
 export type loginFormType = z.infer<typeof loginFormSchema>;
 export type recoveryFormType = z.infer<typeof recoveryFormSchema>;
