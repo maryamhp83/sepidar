@@ -32,7 +32,7 @@ import { Badge } from "../ui/badge";
 import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import DatePicker from "../ui/datePicker";
-import { persianDateFormatter } from "@/lib/date";
+import { persianNoTimeDateFormatter } from "@/lib/date";
 import EditAppointmentDialog from "../dialog/appointments/editAppointmentDialog";
 import DeleteAppointmentDialog from "../dialog/appointments/deleteAppointmentDialog";
 
@@ -177,7 +177,7 @@ export default function AppointmentsFilterableTable({
                   <TableCell>{digitsEnToFa(item.phoneNumber)}</TableCell>
                   <TableCell>{item.department.name}</TableCell>
                   <TableCell>
-                    {persianDateFormatter.format(new Date(item.date))}
+                    {persianNoTimeDateFormatter.format(new Date(item.date))}
                   </TableCell>
                   <TableCell>
                     <Badge

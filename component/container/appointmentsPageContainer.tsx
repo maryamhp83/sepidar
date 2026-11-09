@@ -5,11 +5,11 @@ import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import { AppointmentType } from "@/type/general";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import AppointmentsCalendarCard from "../card/appointmentsCalenderCard";
+import AppointmentCalendarCard from "../card/appointmentCalendarCard";
 
 const appointments: AppointmentType[] = [
   {
-    createdAt: new Date("2026-11-02").toISOString(),
+    createdAt: new Date().toISOString(),
     date: new Date("2026-11-12").toISOString(),
     department: departments[2],
     fullName: "محمد کریمی",
@@ -121,7 +121,7 @@ export default function AppointmentsPageContainer() {
         <AppointmentsFilterableTable data={appointments} />
       </TabsContent>
       <TabsContent value={"calendar"}>
-        <AppointmentsCalendarCard data={appointments} />
+        <AppointmentCalendarCard data={appointments} />
       </TabsContent>
     </Tabs>
   );

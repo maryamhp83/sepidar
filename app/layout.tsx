@@ -7,6 +7,7 @@ import { cn } from "cn";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/component/ui/sonner";
 import QueryClientProvider from "@/component/provider/queryClientProvider";
+import { TooltipProvider } from "@/component/ui/tooltip";
 
 const appName = "سپیدار";
 const title = "سپیدار | سامانه مدیریت بیمارستان";
@@ -111,8 +112,10 @@ export default function Layout({ children }: ChildrenOnlyProps) {
         <QueryClientProvider>
           <ThemeProvider>
             <DirectionProvider direction="rtl">
-              <Toaster richColors />
-              {children}
+              <TooltipProvider>
+                <Toaster richColors />
+                {children}
+              </TooltipProvider>
             </DirectionProvider>
           </ThemeProvider>
         </QueryClientProvider>
