@@ -169,3 +169,8 @@ export interface EditAppointmentDialogProps {
 }
 
 export type DeleteAppointmentDialogProps = EditAppointmentDialogProps;
+
+export interface AppointmentsCalendarCardProps {
+  className?: string;
+  data: AppointmentType[];
+}
