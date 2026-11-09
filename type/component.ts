@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import {
+  DoctorType,
   patientsDepartmentsType,
   patientsStatusesType,
   PatientType,
@@ -120,3 +121,15 @@ export interface EditPatientDialogProps {
 }
 
 export type DeletePatientDialogProps = EditPatientDialogProps;
+
+export interface DoctorsFilterableTableProps {
+  className?: string;
+  data: DoctorType[];
+}
+
+export interface EditDoctorDialogProps {
+  className?: string;
+  data: DoctorType;
+}
+
+export type DeleteDoctorDialogProps = EditDoctorDialogProps;

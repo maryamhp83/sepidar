@@ -73,7 +73,38 @@ export const addNewPatientFormSchema = z.object({
   }),
 });
 
+export const addNewDoctorFormSchema = z.object({
+  fullName: z
+    .string()
+    .min(1, "نام و نام خانوادگی الزامی است.")
+    .min(3, "نام و نام خانوادگی باید حداقل ۳ کاراکتر باشد."),
+  nationalCode: z
+    .string()
+    .min(1, "کد ملی الزامی است.")
+    .refine(
+      (value) => verifyIranianNationalId(value),
+      "کد ملی وارد شده معتبر نیست.",
+    ),
+  phoneNumber: z
+    .string()
+    .min(1, "شماره تلفن الزامی است.")
+    .refine(
+      (value) => isPhoneNumberValid(value),
+      "شماره تلفن وارد شده معتبر نیست.",
+    ),
+  department: z.enum(
+    ["قلب و عروق", "داخلی", "ارتوپد", "اطفال", "مغز و اعصاب", "اورژانسی"],
+    {
+      message: "انتخاب بخش درمانی الزامی است.",
+    },
+  ),
+  status: z.enum(["فعال", "غیر فعال", "در انتظار"], {
+    message: "انتخاب وضعیت الزامی است.",
+  }),
+});
+
 export type addNewPatientFormType = z.infer<typeof addNewPatientFormSchema>;
+export type addNewDoctorFormType = z.infer<typeof addNewDoctorFormSchema>;
 export type signupFormType = z.infer<typeof signupFormSchema>;
 export type loginFormType = z.infer<typeof loginFormSchema>;
 export type recoveryFormType = z.infer<typeof recoveryFormSchema>;
