@@ -1,5 +1,11 @@
 import type { ReactNode } from "react";
-import { Department, DoctorType, PatientType } from "./general";
+import {
+  AppointmentType,
+  Department,
+  DoctorType,
+  PatientType,
+} from "./general";
+import { Matcher } from "react-day-picker";
 
 export interface ChildrenOnlyProps {
   children: ReactNode;
@@ -139,3 +145,27 @@ export interface EditDepartmentDialogProps extends DialogProps {
 }
 
 export type DeleteDepartmentDialogProps = EditDepartmentDialogProps;
+
+export interface DatePickerProps {
+  value?: Date;
+  invalid?: boolean;
+  onChange?: (date: Date | undefined) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  disabledDates?: Matcher | Matcher[];
+  minDate?: Date;
+  maxDate?: Date;
+  hasReset?: boolean;
+  className?: string;
+}
+
+export interface AppointmentsFiltrableTableProps {
+  className?: string;
+  data: AppointmentType[];
+}
+
+export interface EditAppointmentDialogProps {
+  data: AppointmentType;
+}
+
+export type DeleteAppointmentDialogProps = EditAppointmentDialogProps;

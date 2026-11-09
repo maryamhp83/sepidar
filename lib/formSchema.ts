@@ -97,6 +97,36 @@ export const addNewDoctorFormSchema = z.object({
   }),
 });
 
+export const addNewAppointmentFormSchema = z.object({
+  fullName: z
+    .string()
+    .min(1, "نام و نام خانوادگی الزامی است.")
+    .min(3, "نام و نام خانوادگی باید حداقل ۳ کاراکتر باشد."),
+  nationalCode: z
+    .string()
+    .min(1, "کد ملی الزامی است.")
+    .refine(
+      (value) => verifyIranianNationalId(value),
+      "کد ملی وارد شده معتبر نیست.",
+    ),
+  phoneNumber: z
+    .string()
+    .min(1, "شماره تلفن الزامی است.")
+    .refine(
+      (value) => isPhoneNumberValid(value),
+      "شماره تلفن وارد شده معتبر نیست.",
+    ),
+  department: z.string().min(1, {
+    message: "انتخاب بخش درمانی الزامی است.",
+  }),
+  status: z.string().min(1, {
+    message: "انتخاب وضعیت الزامی است.",
+  }),
+  date: z.date({
+    message: "تاریخ پرداخت را انتخاب کنید.",
+  }),
+});
+
 export const addNewDepartmentFormSchema = z.object({
   name: z.string().min(1, "نام دپارتمان الزامی است"),
   description: z.string().min(1, "توضیحات دپارتمان الزامی است"),
@@ -105,9 +135,13 @@ export const addNewDepartmentFormSchema = z.object({
 
 export type addNewPatientFormType = z.infer<typeof addNewPatientFormSchema>;
 export type addNewDoctorFormType = z.infer<typeof addNewDoctorFormSchema>;
-export type addNewDepartmentFormType = z.infer<
-  typeof addNewDepartmentFormSchema
->;
 export type signupFormType = z.infer<typeof signupFormSchema>;
 export type loginFormType = z.infer<typeof loginFormSchema>;
 export type recoveryFormType = z.infer<typeof recoveryFormSchema>;
+export type addNewDepartmentFormType = z.infer<
+  typeof addNewDepartmentFormSchema
+>;
+
+export type addNewAppointmentFormType = z.infer<
+  typeof addNewAppointmentFormSchema
+>;
