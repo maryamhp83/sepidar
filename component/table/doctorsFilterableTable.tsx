@@ -1,10 +1,6 @@
 "use client";
 
 import { Card, CardHeader, CardTitle } from "../ui/card";
-import {
-  departments as doctorsDepartments,
-  statuses as doctorsStatuses,
-} from "@/component/dialog/doctors/addNewDoctorDialog";
 import { Input } from "../ui/input";
 import {
   Select,
@@ -33,31 +29,22 @@ import { cn } from "cn";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
 import { Badge } from "../ui/badge";
 import { useState } from "react";
-import {
-  doctorsDepartmentsType,
-  doctorsStatusesType,
-  patientsDepartmentsType,
-  patientsStatusesType,
-} from "@/type/general";
 import EditDoctorDialog from "../dialog/doctors/editDoctorDialog";
 import DeleteDoctorDialog from "../dialog/doctors/deleteDoctorDialog";
+import departments from "@/data/departments";
+import statuses from "@/data/statuses";
 
 export default function DoctorsFilterableTable({
   data,
   className,
 }: DoctorsFilterableTableProps) {
   const [searchStr, setSearchStr] = useState("");
-  const [departmentFilter, setDepartmentFilter] = useState<
-    patientsDepartmentsType | "همه"
-  >("همه");
+  const [departmentFilter, setDepartmentFilter] = useState("همه");
+  const [statusFilter, setStatusFilter] = useState("همه");
 
-  const [statusFilter, setStatusFilter] = useState<
-    patientsStatusesType | "همه"
-  >("همه");
+  const normalizedSearch = searchStr.trim().toLowerCase();
 
   const filteredData = data.filter((item) => {
-    const normalizedSearch = searchStr.trim().toLowerCase();
-
     const matchesSearch =
       !normalizedSearch ||
       item.fullName.toLowerCase().includes(normalizedSearch) ||
@@ -65,18 +52,13 @@ export default function DoctorsFilterableTable({
       item.phoneNumber.includes(normalizedSearch);
 
     const matchesDepartment =
-      !departmentFilter ||
-      departmentFilter === "همه" ||
-      item.department === departmentFilter;
+      departmentFilter === "همه" || item.department.id === departmentFilter;
 
     const matchesStatus =
-      !statusFilter || statusFilter === "همه" || item.status === statusFilter;
+      statusFilter === "همه" || item.status.id === statusFilter;
 
     return matchesSearch && matchesDepartment && matchesStatus;
   });
-
-  const departmentsArrayToSelect = ["همه", ...doctorsDepartments];
-  const statusesArrayToSelect = ["همه", ...doctorsStatuses];
 
   if (data.length === 0) {
     return (
@@ -112,34 +94,34 @@ export default function DoctorsFilterableTable({
             />
             <Select
               value={departmentFilter}
-              onValueChange={(value) =>
-                setDepartmentFilter(value as doctorsDepartmentsType | "همه")
-              }
+              onValueChange={(value) => setDepartmentFilter(value as string)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="انتخاب بخش درمانی" />
               </SelectTrigger>
+
               <SelectContent>
-                {departmentsArrayToSelect.map((item, index) => (
-                  <SelectItem key={`doctors-departments-${index}`} value={item}>
-                    {item}
+                <SelectItem value="همه">همه بخش‌ها</SelectItem>
+
+                {departments.map((department) => (
+                  <SelectItem key={department.id} value={department.id}>
+                    {department.name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             <Select
               value={statusFilter}
-              onValueChange={(value) =>
-                setStatusFilter(value as doctorsStatusesType | "همه")
-              }
+              onValueChange={(value) => setStatusFilter(value as string)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="انتخاب وضعیت بیمار" />
               </SelectTrigger>
               <SelectContent>
-                {statusesArrayToSelect.map((item, index) => (
-                  <SelectItem key={`doctor-statuses-${index}`} value={item}>
-                    {item}
+                <SelectItem value="همه">همه وضعیت‌ها</SelectItem>
+                {statuses.map((status) => (
+                  <SelectItem key={status.id} value={status.id}>
+                    {status.name}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -177,19 +159,19 @@ export default function DoctorsFilterableTable({
                   <TableCell>{item.fullName}</TableCell>
                   <TableCell>{digitsEnToFa(item.nationalCode)}</TableCell>
                   <TableCell>{digitsEnToFa(item.phoneNumber)}</TableCell>
-                  <TableCell>{item.department}</TableCell>
+                  <TableCell>{item.department.name}</TableCell>
                   <TableCell>
                     <Badge
                       className={cn(
                         "bg-current/10",
-                        item.status === "فعال"
+                        item.status.id === "active"
                           ? "text-primary"
-                          : item.status === "در انتظار"
+                          : item.status.id === "pending"
                             ? "text-amber-500"
                             : "text-red-500",
                       )}
                     >
-                      {item.status}
+                      {item.status.name}
                     </Badge>
                   </TableCell>
                   <TableCell className="flex items-center justify-end gap-2">

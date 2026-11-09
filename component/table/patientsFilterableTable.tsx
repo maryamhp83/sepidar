@@ -117,7 +117,7 @@ export default function PatientsFilterableTable({
             </Select>
             <Select
               value={statusFilter}
-              onValueChange={(value) => setDepartmentFilter(value as string)}
+              onValueChange={(value) => setStatusFilter(value as string)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="انتخاب وضعیت بیمار" />

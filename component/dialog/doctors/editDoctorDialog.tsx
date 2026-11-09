@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/component/ui/dialog";
-import { departments, statuses } from "./addNewDoctorDialog";
 import { addNewDoctorFormSchema, addNewDoctorFormType } from "@/lib/formSchema";
 import { EditDoctorDialogProps } from "@/type/component";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +28,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/component/ui/select";
+import departments from "@/data/departments";
+import statuses from "@/data/statuses";
 
 export default function EditDoctorDialog({
   className,
@@ -38,7 +39,12 @@ export default function EditDoctorDialog({
 
   const form = useForm<addNewDoctorFormType>({
     resolver: zodResolver(addNewDoctorFormSchema),
-    defaultValues: data,
+    defaultValues: {
+      ...data,
+      department: departments.find((item) => item.id === data.department.id)
+        ?.id,
+      status: statuses.find((item) => item.id === data.status.id)?.id,
+    },
   });
 
   const mutation = useMutation({
@@ -166,10 +172,10 @@ export default function EditDoctorDialog({
                     <SelectContent>
                       {departments.map((item, index) => (
                         <SelectItem
-                          key={`doctor-departments-${index}`}
-                          value={item}
+                          key={`patient-departments-${index}`}
+                          value={item.id}
                         >
-                          {item}
+                          {item.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -188,22 +194,22 @@ export default function EditDoctorDialog({
                   data-invalid={fieldState.invalid}
                   className="sm:col-span-2"
                 >
-                  <FieldLabel htmlFor={field.name}>وضعیت</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>وضعیت بیمار</FieldLabel>
                   <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger
                       id={field.name}
                       aria-invalid={fieldState.invalid}
                       className="w-full"
                     >
-                      <SelectValue placeholder="انتخاب وضعیت" />
+                      <SelectValue placeholder="انتخاب وضعیت بیمار" />
                     </SelectTrigger>
                     <SelectContent>
                       {statuses.map((item, index) => (
                         <SelectItem
-                          key={`doctor-statuses-${index}`}
-                          value={item}
+                          key={`patient-statuses-${index}`}
+                          value={item.id}
                         >
-                          {item}
+                          {item.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
