@@ -1,10 +1,13 @@
 "use client";
 
+import { useState } from "react";
+import { digitsEnToFa } from "@persian-tools/persian-tools";
+import { List } from "lucide-react";
+import { PatientsFilterableTableProps } from "@/type/component";
+import departments from "@/data/departments";
+import statuses from "@/data/statuses";
+import { cn } from "cn";
 import { Card, CardHeader, CardTitle } from "../ui/card";
-import {
-  departments as patientDepartments,
-  statuses as patientStatuses,
-} from "@/component/dialog/patients/addNewPatientDialog";
 import { Input } from "../ui/input";
 import {
   Select,
@@ -13,7 +16,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { PatientsFilterableTableProps } from "@/type/component";
 import {
   Empty,
   EmptyDescription,
@@ -21,7 +23,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/component/ui/empty";
-import { List } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -29,30 +30,22 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { cn } from "cn";
-import { digitsEnToFa } from "@persian-tools/persian-tools";
 import { Badge } from "../ui/badge";
+
 import EditPatientDialog from "../dialog/patients/editPatientDialog";
 import DeletePatientDialog from "../dialog/patients/deletePatientDialog";
-import { useState } from "react";
-import { patientsDepartmentsType, patientsStatusesType } from "@/type/general";
 
 export default function PatientsFilterableTable({
   data,
   className,
 }: PatientsFilterableTableProps) {
   const [searchStr, setSearchStr] = useState("");
-  const [departmentFilter, setDepartmentFilter] = useState<
-    patientsDepartmentsType | "همه"
-  >("همه");
+  const [departmentFilter, setDepartmentFilter] = useState("همه");
+  const [statusFilter, setStatusFilter] = useState("همه");
 
-  const [statusFilter, setStatusFilter] = useState<
-    patientsStatusesType | "همه"
-  >("همه");
+  const normalizedSearch = searchStr.trim().toLowerCase();
 
   const filteredData = data.filter((item) => {
-    const normalizedSearch = searchStr.trim().toLowerCase();
-
     const matchesSearch =
       !normalizedSearch ||
       item.fullName.toLowerCase().includes(normalizedSearch) ||
@@ -60,18 +53,13 @@ export default function PatientsFilterableTable({
       item.phoneNumber.includes(normalizedSearch);
 
     const matchesDepartment =
-      !departmentFilter ||
-      departmentFilter === "همه" ||
-      item.department === departmentFilter;
+      departmentFilter === "همه" || item.department.id === departmentFilter;
 
     const matchesStatus =
-      !statusFilter || statusFilter === "همه" || item.status === statusFilter;
+      statusFilter === "همه" || item.status.id === statusFilter;
 
     return matchesSearch && matchesDepartment && matchesStatus;
   });
-
-  const departmentsArrayToSelect = ["همه", ...patientDepartments];
-  const statusesArrayToSelect = ["همه", ...patientStatuses];
 
   if (data.length === 0) {
     return (
@@ -79,9 +67,10 @@ export default function PatientsFilterableTable({
         <CardHeader>
           <CardTitle>بیماران</CardTitle>
         </CardHeader>
+
         <Empty className="px-5.5">
           <EmptyHeader>
-            <EmptyMedia variant={"icon"}>
+            <EmptyMedia variant="icon">
               <List />
             </EmptyMedia>
             <EmptyTitle>هنوز بیماری ثبت نشده است.</EmptyTitle>
@@ -100,42 +89,44 @@ export default function PatientsFilterableTable({
           <CardTitle className="truncate block lg:w-auto w-full">
             بیماران
           </CardTitle>
+
           <div className="flex-1 flex lg:flex-row flex-col lg:items-center justify-end gap-3 flex-wrap lg:w-auto w-full">
             <Input
               placeholder="جست‌وجو در مدیریت بیماران..."
               className="w-62"
+              value={searchStr}
               onChange={(e) => setSearchStr(e.target.value)}
             />
             <Select
               value={departmentFilter}
-              onValueChange={(value) =>
-                setDepartmentFilter(value as patientsDepartmentsType | "همه")
-              }
+              onValueChange={(value) => setDepartmentFilter(value as string)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="انتخاب بخش درمانی" />
               </SelectTrigger>
+
               <SelectContent>
-                {departmentsArrayToSelect.map((item, index) => (
-                  <SelectItem key={`patient-departments-${index}`} value={item}>
-                    {item}
+                <SelectItem value="همه">همه بخش‌ها</SelectItem>
+
+                {departments.map((department) => (
+                  <SelectItem key={department.id} value={department.id}>
+                    {department.name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
             <Select
               value={statusFilter}
-              onValueChange={(value) =>
-                setStatusFilter(value as patientsStatusesType | "همه")
-              }
+              onValueChange={(value) => setDepartmentFilter(value as string)}
             >
               <SelectTrigger>
                 <SelectValue placeholder="انتخاب وضعیت بیمار" />
               </SelectTrigger>
               <SelectContent>
-                {statusesArrayToSelect.map((item, index) => (
-                  <SelectItem key={`patient-statuses-${index}`} value={item}>
-                    {item}
+                <SelectItem value="همه">همه وضعیت‌ها</SelectItem>
+                {statuses.map((status) => (
+                  <SelectItem key={status.id} value={status.id}>
+                    {status.name}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -167,27 +158,29 @@ export default function PatientsFilterableTable({
                 <TableCell className="text-left">عملیات</TableCell>
               </TableRow>
             </TableHeader>
+
             <TableBody>
               {filteredData.map((item, index) => (
                 <TableRow key={`patient-${index}`}>
                   <TableCell>{item.fullName}</TableCell>
                   <TableCell>{digitsEnToFa(item.nationalCode)}</TableCell>
                   <TableCell>{digitsEnToFa(item.phoneNumber)}</TableCell>
-                  <TableCell>{item.department}</TableCell>
+                  <TableCell>{item.department.name}</TableCell>
                   <TableCell>
                     <Badge
                       className={cn(
                         "bg-current/10",
-                        item.status === "فعال"
+                        item.status.id === "active"
                           ? "text-primary"
-                          : item.status === "در انتظار"
+                          : item.status.id === "pending"
                             ? "text-amber-500"
                             : "text-red-500",
                       )}
                     >
-                      {item.status}
+                      {item.status.name}
                     </Badge>
                   </TableCell>
+
                   <TableCell className="flex items-center justify-end gap-2">
                     <EditPatientDialog data={item} />
                     <DeletePatientDialog data={item} />

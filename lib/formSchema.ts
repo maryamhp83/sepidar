@@ -62,13 +62,10 @@ export const addNewPatientFormSchema = z.object({
       (value) => isPhoneNumberValid(value),
       "شماره تلفن وارد شده معتبر نیست.",
     ),
-  department: z.enum(
-    ["قلب و عروق", "داخلی", "ارتوپد", "اطفال", "مغز و اعصاب", "اورژانسی"],
-    {
-      message: "انتخاب بخش درمانی الزامی است.",
-    },
-  ),
-  status: z.enum(["فعال", "غیر فعال", "در انتظار"], {
+  department: z.string().min(1, {
+    message: "انتخاب بخش درمانی الزامی است.",
+  }),
+  status: z.string().min(1, {
     message: "انتخاب وضعیت الزامی است.",
   }),
 });
@@ -92,13 +89,10 @@ export const addNewDoctorFormSchema = z.object({
       (value) => isPhoneNumberValid(value),
       "شماره تلفن وارد شده معتبر نیست.",
     ),
-  department: z.enum(
-    ["قلب و عروق", "داخلی", "ارتوپد", "اطفال", "مغز و اعصاب", "اورژانسی"],
-    {
-      message: "انتخاب بخش درمانی الزامی است.",
-    },
-  ),
-  status: z.enum(["فعال", "غیر فعال", "در انتظار"], {
+  department: z.string().min(1, {
+    message: "انتخاب بخش درمانی الزامی است.",
+  }),
+  status: z.string().min(1, {
     message: "انتخاب وضعیت الزامی است.",
   }),
 });

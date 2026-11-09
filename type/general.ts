@@ -1,25 +1,26 @@
-import {
-  departments as patientDepartments,
-  statuses as patientStatuses,
-} from "@/component/dialog/patients/addNewPatientDialog";
+export interface Department {
+  name: string;
+  id: string;
+  description: string;
+  doctorsCount: number;
+  patientsCount: number;
+  management: {
+    id: string;
+    fullName: string;
+  };
+}
 
-import {
-  departments as doctorsDepartments,
-  statuses as doctorsStatuses,
-} from "@/component/dialog/doctors/addNewDoctorDialog";
-
-export type patientsDepartmentsType = (typeof patientDepartments)[number];
-export type patientsStatusesType = (typeof patientStatuses)[number];
-
-export type doctorsDepartmentsType = (typeof doctorsDepartments)[number];
-export type doctorsStatusesType = (typeof doctorsStatuses)[number];
+export interface StatusType {
+  name: string;
+  id: string;
+}
 
 export interface PatientType {
   fullName: string;
   nationalCode: string;
   phoneNumber: string;
-  department: patientsDepartmentsType;
-  status: patientsStatusesType;
+  department: Department;
+  status: StatusType;
   createdAt: string;
   id: string;
 }
@@ -28,8 +29,8 @@ export interface DoctorType {
   fullName: string;
   nationalCode: string;
   phoneNumber: string;
-  department: doctorsDepartmentsType;
-  status: doctorsStatusesType;
+  department: Department;
+  status: StatusType;
   createdAt: string;
   id: string;
 }

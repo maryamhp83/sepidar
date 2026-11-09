@@ -31,17 +31,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/component/ui/select";
-
-export const departments = [
-  "قلب و عروق",
-  "داخلی",
-  "ارتوپد",
-  "اطفال",
-  "مغز و اعصاب",
-  "اورژانسی",
-] as const;
-
-export const statuses = ["فعال", "غیر فعال", "در انتظار"] as const;
+import departments from "@/data/departments";
+import statuses from "@/data/statuses";
 
 export default function AddNewPatientDialog({ className }: ClassOnlyProps) {
   const [open, setOpen] = useState(false);
@@ -182,9 +173,9 @@ export default function AddNewPatientDialog({ className }: ClassOnlyProps) {
                       {departments.map((item, index) => (
                         <SelectItem
                           key={`patient-departments-${index}`}
-                          value={item}
+                          value={item.id}
                         >
-                          {item}
+                          {item.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -216,9 +207,9 @@ export default function AddNewPatientDialog({ className }: ClassOnlyProps) {
                       {statuses.map((item, index) => (
                         <SelectItem
                           key={`patient-statuses-${index}`}
-                          value={item}
+                          value={item.id}
                         >
-                          {item}
+                          {item.name}
                         </SelectItem>
                       ))}
                     </SelectContent>

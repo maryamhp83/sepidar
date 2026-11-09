@@ -31,17 +31,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/component/ui/select";
-
-export const departments = [
-  "قلب و عروق",
-  "داخلی",
-  "ارتوپد",
-  "اطفال",
-  "مغز و اعصاب",
-  "اورژانسی",
-] as const;
-
-export const statuses = ["فعال", "غیر فعال", "در انتظار"] as const;
+import departments from "@/data/departments";
+import statuses from "@/data/statuses";
 
 export default function EditPatientDialog({
   className,
@@ -51,7 +42,12 @@ export default function EditPatientDialog({
 
   const form = useForm<addNewPatientFormType>({
     resolver: zodResolver(addNewPatientFormSchema),
-    defaultValues: data,
+    defaultValues: {
+      ...data,
+      department: departments.find((item) => item.id === data.department.id)
+        ?.id,
+      status: statuses.find((item) => item.id === data.status.id)?.id,
+    },
   });
 
   const mutation = useMutation({
@@ -180,9 +176,9 @@ export default function EditPatientDialog({
                       {departments.map((item, index) => (
                         <SelectItem
                           key={`patient-departments-${index}`}
-                          value={item}
+                          value={item.id}
                         >
-                          {item}
+                          {item.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -214,9 +210,9 @@ export default function EditPatientDialog({
                       {statuses.map((item, index) => (
                         <SelectItem
                           key={`patient-statuses-${index}`}
-                          value={item}
+                          value={item.id}
                         >
-                          {item}
+                          {item.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
