@@ -97,8 +97,17 @@ export const addNewDoctorFormSchema = z.object({
   }),
 });
 
+export const addNewDepartmentFormSchema = z.object({
+  name: z.string().min(1, "نام دپارتمان الزامی است"),
+  description: z.string().min(1, "توضیحات دپارتمان الزامی است"),
+  management: z.string().min(0, "انتخاب مدیر الزامی است"),
+});
+
 export type addNewPatientFormType = z.infer<typeof addNewPatientFormSchema>;
 export type addNewDoctorFormType = z.infer<typeof addNewDoctorFormSchema>;
+export type addNewDepartmentFormType = z.infer<
+  typeof addNewDepartmentFormSchema
+>;
 export type signupFormType = z.infer<typeof signupFormSchema>;
 export type loginFormType = z.infer<typeof loginFormSchema>;
 export type recoveryFormType = z.infer<typeof recoveryFormSchema>;

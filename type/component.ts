@@ -1,10 +1,5 @@
 import type { ReactNode } from "react";
-import {
-  DoctorType,
-  patientsDepartmentsType,
-  patientsStatusesType,
-  PatientType,
-} from "./general";
+import { Department, DoctorType, PatientType } from "./general";
 
 export interface ChildrenOnlyProps {
   children: ReactNode;
@@ -133,3 +128,14 @@ export interface EditDoctorDialogProps {
 }
 
 export type DeleteDoctorDialogProps = EditDoctorDialogProps;
+
+export interface DepartmentCardProps {
+  className?: string;
+  data: Department;
+}
+
+export interface EditDepartmentDialogProps extends DialogProps {
+  data: Department;
+}
+
+export type DeleteDepartmentDialogProps = EditDepartmentDialogProps;

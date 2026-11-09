@@ -8,8 +8,8 @@ const departments: Department[] = [
     doctorsCount: 12,
     patientsCount: 350,
     management: {
-      id: "doctor-1",
-      fullName: "دکتر محمد رضایی",
+      fullName: "علی رضایی",
+      id: "doc-001",
     },
   },
   {
@@ -19,8 +19,8 @@ const departments: Department[] = [
     doctorsCount: 15,
     patientsCount: 420,
     management: {
-      id: "doctor-2",
-      fullName: "دکتر علی محمدی",
+      fullName: "محمد احمدی",
+      id: "doc-002",
     },
   },
   {
@@ -30,8 +30,8 @@ const departments: Department[] = [
     doctorsCount: 8,
     patientsCount: 210,
     management: {
-      id: "doctor-3",
-      fullName: "دکتر امیر حسینی",
+      fullName: "سارا محمدی",
+      id: "doc-003",
     },
   },
   {
@@ -41,8 +41,8 @@ const departments: Department[] = [
     doctorsCount: 10,
     patientsCount: 280,
     management: {
-      id: "doctor-4",
-      fullName: "دکتر سارا احمدی",
+      fullName: "علی رضایی",
+      id: "doc-001",
     },
   },
   {
@@ -52,8 +52,8 @@ const departments: Department[] = [
     doctorsCount: 7,
     patientsCount: 190,
     management: {
-      id: "doctor-5",
-      fullName: "دکتر رضا کریمی",
+      fullName: "علی رضایی",
+      id: "doc-001",
     },
   },
   {
@@ -63,8 +63,8 @@ const departments: Department[] = [
     doctorsCount: 14,
     patientsCount: 500,
     management: {
-      id: "doctor-6",
-      fullName: "دکتر مهدی مرادی",
+      fullName: "سارا محمدی",
+      id: "doc-003",
     },
   },
 ];
