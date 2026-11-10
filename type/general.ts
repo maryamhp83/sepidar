@@ -45,3 +45,17 @@ export interface AppointmentType {
   createdAt: string;
   id: string;
 }
+
+export interface BedType {
+  fullName: string;
+  nationalCode: string;
+  phoneNumber: string;
+  date: {
+    from: string;
+    to: string;
+  };
+  department: Department;
+  status: StatusType;
+  createdAt: string;
+  id: string;
+}

@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 import {
   AppointmentType,
+  BedType,
   Department,
   DoctorType,
   PatientType,
 } from "./general";
-import { Matcher } from "react-day-picker";
+import { DateRange, Matcher } from "react-day-picker";
 
 export interface ChildrenOnlyProps {
   children: ReactNode;
@@ -156,6 +157,9 @@ export interface DatePickerProps {
   minDate?: Date;
   maxDate?: Date;
   hasReset?: boolean;
+  range?: boolean;
+  rangeValue?: DateRange;
+  onRangeChange?: (range: DateRange | undefined) => void;
   className?: string;
 }
 
@@ -174,3 +178,14 @@ export interface AppointmentsCalendarCardProps {
   className?: string;
   data: AppointmentType[];
 }
+
+export interface BedsFilterableTableProps {
+  className?: string;
+  data: BedType[];
+}
+
+export interface EditBedDialogProps {
+  data: BedType;
+}
+
+export type DeleteBedDialogProps = EditBedDialogProps;
