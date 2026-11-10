@@ -203,6 +203,21 @@ export const AddNewInvoiceFormSchema = z.object({
   payed: z.number().min(0, "مبلغ پرداخت‌شده نمی‌تواند منفی باشد"),
   status: z.enum(["payed", "not-payed"]),
 });
+export const settingsFormSchema = z.object({
+  email: z
+    .string()
+    .min(1, "وارد کردن ایمیل الزامی است.")
+    .email("آدرس ایمیل معتبر نیست."),
+  userName: z
+    .string()
+    .min(1, "وارد کردن نام کاربری الزامی است.")
+    .min(3, "نام کاربری باید حداقل ۳ کاراکتر باشد.")
+    .max(30, "نام کاربری نمی‌تواند بیشتر از ۳۰ کاراکتر باشد."),
+  password: z
+    .string()
+    .min(8, "رمز عبور باید حداقل ۸ کاراکتر داشته باشد.")
+    .optional(),
+});
 
 export type addNewPatientFormType = z.infer<typeof addNewPatientFormSchema>;
 export type addNewDoctorFormType = z.infer<typeof addNewDoctorFormSchema>;
@@ -211,6 +226,7 @@ export type loginFormType = z.infer<typeof loginFormSchema>;
 export type recoveryFormType = z.infer<typeof recoveryFormSchema>;
 export type addNewBedFormType = z.infer<typeof addNewBedFormSchema>;
 export type AddNewInvoiceFormType = z.infer<typeof AddNewInvoiceFormSchema>;
+export type settingsFormType = z.infer<typeof settingsFormSchema>;
 export type addNewMedicalRecordFormType = z.infer<
   typeof addNewMedicalRecordFormSchema
 >;
