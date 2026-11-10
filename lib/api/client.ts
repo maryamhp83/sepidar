@@ -8,8 +8,8 @@ export const account = new Account(client);
 export const tablesDB = new TablesDB(client);
 
 export const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!;
-export const settingsTableDBId =
-  process.env.NEXT_PUBLIC_APPWRITE_SETTINGS_TABLE_DB_ID!;
+export const patientsTableId =
+  process.env.NEXT_PUBLIC_APPWRITE_PATIENTS_TABLE_ID!;
 
 export { ID };
 export { client };

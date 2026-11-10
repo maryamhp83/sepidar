@@ -15,7 +15,6 @@ import {
   addNewPatientFormSchema,
   addNewPatientFormType,
 } from "@/lib/formSchema";
-import { ClassOnlyProps } from "@/type/component";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Plus } from "lucide-react";
@@ -33,8 +32,13 @@ import {
 } from "@/component/ui/select";
 import departments from "@/data/departments";
 import statuses from "@/data/statuses";
+import { createPatient } from "@/lib/api/patients";
+import { AddNewPatientDialogProps } from "@/type/component";
 
-export default function AddNewPatientDialog({ className }: ClassOnlyProps) {
+export default function AddNewPatientDialog({
+  className,
+  refetch,
+}: AddNewPatientDialogProps) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<addNewPatientFormType>({
@@ -49,9 +53,7 @@ export default function AddNewPatientDialog({ className }: ClassOnlyProps) {
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: addNewPatientFormType) => {
-      // await onSubmit(data);
-    },
+    mutationFn: (data: addNewPatientFormType) => createPatient(data),
   });
 
   const handleSubmit: SubmitHandler<addNewPatientFormType> = async (data) => {
@@ -64,6 +66,7 @@ export default function AddNewPatientDialog({ className }: ClassOnlyProps) {
 
       form.reset();
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("افزودن بیمار ناموفق بود", {
         description: `متأسفانه اطلاعات «${data.fullName}» ثبت نشد. لطفاً دوباره تلاش کنید.`,

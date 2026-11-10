@@ -33,10 +33,12 @@ import {
 } from "@/component/ui/select";
 import departments from "@/data/departments";
 import statuses from "@/data/statuses";
+import { updatePatient } from "@/lib/api/patients";
 
 export default function EditPatientDialog({
   className,
   data,
+  refetch,
 }: EditPatientDialogProps) {
   const [open, setOpen] = useState(false);
 
@@ -44,16 +46,15 @@ export default function EditPatientDialog({
     resolver: zodResolver(addNewPatientFormSchema),
     defaultValues: {
       ...data,
-      department: departments.find((item) => item.id === data.department.id)
+      department: departments.find((item) => item.id === data?.department.id)
         ?.id,
-      status: statuses.find((item) => item.id === data.status.id)?.id,
+      status: statuses.find((item) => item.id === data?.status.id)?.id,
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (formData: addNewPatientFormType) => {
-      // await onSubmit(data);
-    },
+    mutationFn: (data2: addNewPatientFormType) =>
+      updatePatient(data2, data?.id ?? ""),
   });
 
   const handleSubmit: SubmitHandler<addNewPatientFormType> = async (data) => {
@@ -66,6 +67,7 @@ export default function EditPatientDialog({
 
       form.reset();
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("ویرایش اطلاعات بیمار ناموفق بود", {
         description: `متأسفانه اطلاعات «${data.fullName}» به‌روزرسانی نشد. لطفاً دوباره تلاش کنید.`,

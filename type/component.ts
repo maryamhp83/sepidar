@@ -14,6 +14,12 @@ export interface ChildrenOnlyProps {
   children: ReactNode;
 }
 
+export interface APIDialogProps<T> {
+  className?: string;
+  refetch?: () => void;
+  data?: T;
+}
+
 export interface ClassOnlyProps {
   className?: string;
 }
@@ -117,26 +123,22 @@ export interface RecentHospitolizedTableProps {
 export interface PatientsFilterableTableProps {
   className?: string;
   data: PatientType[];
+  refetch?: () => void;
 }
 
-export interface EditPatientDialogProps {
+export interface FilterableTableProps<T> {
   className?: string;
-  data: PatientType;
+  data: T;
 }
 
-export type DeletePatientDialogProps = EditPatientDialogProps;
+export type DoctorsFilterableTableProps = FilterableTableProps<DoctorType[]>;
 
-export interface DoctorsFilterableTableProps {
-  className?: string;
-  data: DoctorType[];
-}
+export type AddNewPatientDialogProps = APIDialogProps<undefined>;
 
-export interface EditDoctorDialogProps {
-  className?: string;
-  data: DoctorType;
-}
+export type EditPatientDialogProps = APIDialogProps<PatientType>;
 
-export type DeleteDoctorDialogProps = EditDoctorDialogProps;
+export type DeletePatientDialogProps = APIDialogProps<PatientType>;
+export type DeleteDoctorDialogProps = APIDialogProps<DoctorType>;
 
 export interface DepartmentCardProps {
   className?: string;
@@ -213,3 +215,10 @@ export interface EditInvoiceDialogProps {
 }
 
 export type DeleteInvoiceDialogProps = EditInvoiceDialogProps;
+
+export interface ApiLoaderProps {
+  children: ReactNode;
+  isLoading: boolean;
+  isError: boolean;
+  refetch?: () => void;
+}

@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/component/ui/dialog";
+import { deletePatient } from "@/lib/api/patients";
 import { DeletePatientDialogProps } from "@/type/component";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Trash } from "lucide-react";
@@ -20,18 +21,18 @@ import { toast } from "sonner";
 export default function DeletePatientDialog({
   className,
   data,
+  refetch,
 }: DeletePatientDialogProps) {
   const [open, setOpen] = useState(false);
   const mutation = useMutation({
-    mutationFn: async () => {
-      // await onSubmit();
-    },
+    mutationFn: async () => deletePatient(data?.id ?? ""),
     onSuccess: () => {
       toast.success("بیمار با موفقیت حذف شد", {
-        description: `اطلاعات بیمار (${data.fullName}) با موفقیت از سیستم حذف شد.`,
+        description: `اطلاعات بیمار (${data?.fullName ?? "-"}) با موفقیت از سیستم حذف شد.`,
       });
 
       setOpen(false);
+      refetch?.();
     },
     onError: () => {
       toast.error("حذف بیمار ناموفق بود", {

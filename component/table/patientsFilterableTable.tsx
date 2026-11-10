@@ -38,6 +38,7 @@ import DeletePatientDialog from "../dialog/patients/deletePatientDialog";
 export default function PatientsFilterableTable({
   data,
   className,
+  refetch,
 }: PatientsFilterableTableProps) {
   const [searchStr, setSearchStr] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("همه");
@@ -182,8 +183,8 @@ export default function PatientsFilterableTable({
                   </TableCell>
 
                   <TableCell className="flex items-center justify-end gap-2">
-                    <EditPatientDialog data={item} />
-                    <DeletePatientDialog data={item} />
+                    <EditPatientDialog data={item} refetch={refetch} />
+                    <DeletePatientDialog data={item} refetch={refetch} />
                   </TableCell>
                 </TableRow>
               ))}
