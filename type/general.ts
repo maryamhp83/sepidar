@@ -70,3 +70,13 @@ export interface MedicalRecordType {
   createdAt: string;
   id: string;
 }
+
+export interface InvoiceType {
+  id: string;
+  fullName: string;
+  description: string;
+  totalPrice: number;
+  payed: number;
+  createdAt: string;
+  status: "payed" | "not-payed";
+}

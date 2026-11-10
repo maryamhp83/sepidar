@@ -4,6 +4,7 @@ import {
   BedType,
   Department,
   DoctorType,
+  InvoiceType,
   MedicalRecordType,
   PatientType,
 } from "./general";
@@ -201,3 +202,14 @@ export interface EditMedicalRecordDialogProps {
 }
 
 export type DeleteMedicalRecordDialogProps = EditMedicalRecordDialogProps;
+
+export interface InvoicesFilterableTableProps {
+  className?: string;
+  data: InvoiceType[];
+}
+
+export interface EditInvoiceDialogProps {
+  data: InvoiceType;
+}
+
+export type DeleteInvoiceDialogProps = EditInvoiceDialogProps;

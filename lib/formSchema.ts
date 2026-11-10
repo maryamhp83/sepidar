@@ -196,12 +196,21 @@ export const addNewMedicalRecordFormSchema = z.object({
   }),
 });
 
+export const AddNewInvoiceFormSchema = z.object({
+  fullName: z.string().min(1, "نام و نام خانوادگی الزامی است"),
+  description: z.string().min(1, "توضیحات الزامی است"),
+  totalPrice: z.number().min(1, "مبلغ کل باید بیشتر از صفر باشد"),
+  payed: z.number().min(0, "مبلغ پرداخت‌شده نمی‌تواند منفی باشد"),
+  status: z.enum(["payed", "not-payed"]),
+});
+
 export type addNewPatientFormType = z.infer<typeof addNewPatientFormSchema>;
 export type addNewDoctorFormType = z.infer<typeof addNewDoctorFormSchema>;
 export type signupFormType = z.infer<typeof signupFormSchema>;
 export type loginFormType = z.infer<typeof loginFormSchema>;
 export type recoveryFormType = z.infer<typeof recoveryFormSchema>;
 export type addNewBedFormType = z.infer<typeof addNewBedFormSchema>;
+export type AddNewInvoiceFormType = z.infer<typeof AddNewInvoiceFormSchema>;
 export type addNewMedicalRecordFormType = z.infer<
   typeof addNewMedicalRecordFormSchema
 >;
