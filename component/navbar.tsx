@@ -15,7 +15,6 @@ import {
   BedDouble,
   FileHeart,
   ReceiptText,
-  TrendingUp,
   Settings,
   PanelRightOpen,
   PanelLeftClose,
@@ -59,11 +58,6 @@ export const navbarData: {
     href: "/beds",
   },
   {
-    title: "اتاق‌ها و تخت‌ها",
-    icon: <BedDouble />,
-    href: "/rooms",
-  },
-  {
     title: "پرونده پزشکی",
     icon: <FileHeart />,
     href: "/medical-records",
@@ -72,11 +66,6 @@ export const navbarData: {
     title: "صورت‌حساب‌ها",
     icon: <ReceiptText />,
     href: "/invoices",
-  },
-  {
-    title: "گزارشات",
-    icon: <TrendingUp />,
-    href: "/reports",
   },
   {
     title: "تنظیمات",

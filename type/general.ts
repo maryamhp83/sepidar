@@ -59,3 +59,14 @@ export interface BedType {
   createdAt: string;
   id: string;
 }
+
+export interface MedicalRecordType {
+  fullName: string;
+  nationalCode: string;
+  phoneNumber: string;
+  date: string;
+  department: Department;
+  status: StatusType;
+  createdAt: string;
+  id: string;
+}

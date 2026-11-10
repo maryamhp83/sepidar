@@ -4,6 +4,7 @@ import {
   BedType,
   Department,
   DoctorType,
+  MedicalRecordType,
   PatientType,
 } from "./general";
 import { DateRange, Matcher } from "react-day-picker";
@@ -189,3 +190,14 @@ export interface EditBedDialogProps {
 }
 
 export type DeleteBedDialogProps = EditBedDialogProps;
+
+export interface MedicalRecordsFilterableTableProps {
+  className?: string;
+  data: MedicalRecordType[];
+}
+
+export interface EditMedicalRecordDialogProps {
+  data: MedicalRecordType;
+}
+
+export type DeleteMedicalRecordDialogProps = EditMedicalRecordDialogProps;
