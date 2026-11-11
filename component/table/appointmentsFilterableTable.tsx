@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { AppointmentsFiltrableTableProps } from "@/type/component";
+import { AppointmentsFilterableTableProps } from "@/type/component";
 import {
   Empty,
   EmptyDescription,
@@ -29,21 +29,24 @@ import {
 import { cn } from "cn";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
 import { Badge } from "../ui/badge";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import DatePicker from "../ui/datePicker";
 import { persianNoTimeDateFormatter } from "@/lib/date";
 import EditAppointmentDialog from "../dialog/appointments/editAppointmentDialog";
 import DeleteAppointmentDialog from "../dialog/appointments/deleteAppointmentDialog";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
 
 export default function AppointmentsFilterableTable({
   data,
   className,
-}: AppointmentsFiltrableTableProps) {
+}: AppointmentsFilterableTableProps) {
   const [searchStr, setSearchStr] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("همه");
   const [statusFilter, setStatusFilter] = useState("همه");
   const [date, setDate] = useState<Date | undefined>(undefined);
+
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
 
   const normalizedSearch = searchStr.trim().toLowerCase();
 
@@ -55,7 +58,7 @@ export default function AppointmentsFilterableTable({
       item.phoneNumber.includes(normalizedSearch);
 
     const matchesDepartment =
-      departmentFilter === "همه" || item.department.id === departmentFilter;
+      departmentFilter === "همه" || item.department.$id === departmentFilter;
 
     const matchesStatus =
       statusFilter === "همه" || item.status.id === statusFilter;
@@ -109,7 +112,7 @@ export default function AppointmentsFilterableTable({
               <SelectContent>
                 <SelectItem value="همه">همه بخش‌ها</SelectItem>
                 {departments.map((department) => (
-                  <SelectItem key={department.id} value={department.id}>
+                  <SelectItem key={department.$id} value={department.$id}>
                     {department.name}
                   </SelectItem>
                 ))}
@@ -193,10 +196,7 @@ export default function AppointmentsFilterableTable({
                       {item.status.name}
                     </Badge>
                   </TableCell>
-                  <TableCell className="flex items-center justify-end gap-2">
-                    <EditAppointmentDialog data={item} />
-                    <DeleteAppointmentDialog data={item} />
-                  </TableCell>
+                  <TableCell className="flex items-center justify-end gap-2"></TableCell>
                 </TableRow>
               ))}
             </TableBody>

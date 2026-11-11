@@ -20,3 +20,12 @@ export interface GETDepartment extends Models.Row {
   name: string;
   description: string;
 }
+
+export interface GETAppointment extends Models.Row {
+  fullName: string;
+  nationalCode: string;
+  phoneNumber: string;
+  date: string;
+  status: string; // strigified type of Status
+  department: string; // strigified type of Department
+}

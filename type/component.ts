@@ -128,10 +128,14 @@ export interface FilterableTableProps<T> {
 
 export type DoctorsFilterableTableProps = FilterableTableProps<DoctorType[]>;
 export type PatientsFilterableTableProps = FilterableTableProps<PatientType[]>;
+export type AppointmentsFilterableTableProps = FilterableTableProps<
+  AppointmentType[]
+>;
 
 export type AddNewPatientDialogProps = APIDialogProps<undefined>;
 export type AddNewDoctorDialogProps = APIDialogProps<undefined>;
 export type AddNewDepartmentDialogProps = APIDialogProps<undefined>;
+export type AddNewAppointmentDialogProps = APIDialogProps<undefined>;
 
 export type EditPatientDialogProps = APIDialogProps<PatientType>;
 export type EditDoctorDialogProps = APIDialogProps<DoctorType>;
@@ -163,11 +167,6 @@ export interface DatePickerProps {
   rangeValue?: DateRange;
   onRangeChange?: (range: DateRange | undefined) => void;
   className?: string;
-}
-
-export interface AppointmentsFiltrableTableProps {
-  className?: string;
-  data: AppointmentType[];
 }
 
 export interface EditAppointmentDialogProps {

@@ -15,7 +15,7 @@ import {
   addNewAppointmentFormSchema,
   addNewAppointmentFormType,
 } from "@/lib/formSchema";
-import { ClassOnlyProps } from "@/type/component";
+import { AddNewAppointmentDialogProps } from "@/type/component";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Plus } from "lucide-react";
@@ -31,12 +31,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/component/ui/select";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import DatePicker from "@/component/ui/datePicker";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
+import { createAppointment } from "@/lib/api/appointments";
 
-export default function AddNewAppointmentDialog({ className }: ClassOnlyProps) {
+export default function AddNewAppointmentDialog({
+  className,
+  refetch,
+}: AddNewAppointmentDialogProps) {
   const [open, setOpen] = useState(false);
+
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
 
   const form = useForm<addNewAppointmentFormType>({
     resolver: zodResolver(addNewAppointmentFormSchema),
@@ -51,9 +58,8 @@ export default function AddNewAppointmentDialog({ className }: ClassOnlyProps) {
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: addNewAppointmentFormType) => {
-      // await onSubmit(data);
-    },
+    mutationFn: async (data: addNewAppointmentFormType) =>
+      createAppointment(data, departments),
   });
 
   const handleSubmit: SubmitHandler<addNewAppointmentFormType> = async (
@@ -68,6 +74,7 @@ export default function AddNewAppointmentDialog({ className }: ClassOnlyProps) {
 
       form.reset();
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("ثبت نوبت ناموفق بود", {
         description: `متأسفانه نوبت «${data.fullName}» ثبت نشد. لطفاً دوباره تلاش کنید.`,
@@ -181,8 +188,11 @@ export default function AddNewAppointmentDialog({ className }: ClassOnlyProps) {
                       <SelectValue placeholder="انتخاب بخش درمانی" />
                     </SelectTrigger>
                     <SelectContent>
-                      {departments.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
+                      {departments.map((item, index) => (
+                        <SelectItem
+                          key={`patient-departments-${index}`}
+                          value={item.$id}
+                        >
                           {item.name}
                         </SelectItem>
                       ))}
