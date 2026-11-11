@@ -2,12 +2,6 @@ export interface Department {
   name: string;
   id: string;
   description: string;
-  doctorsCount: number;
-  patientsCount: number;
-  management: {
-    id: string;
-    fullName: string;
-  };
 }
 
 export interface StatusType {

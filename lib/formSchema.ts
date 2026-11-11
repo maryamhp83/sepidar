@@ -163,7 +163,6 @@ export const addNewBedFormSchema = z.object({
 export const addNewDepartmentFormSchema = z.object({
   name: z.string().min(1, "نام دپارتمان الزامی است"),
   description: z.string().min(1, "توضیحات دپارتمان الزامی است"),
-  management: z.string().min(0, "انتخاب مدیر الزامی است"),
 });
 
 export const addNewMedicalRecordFormSchema = z.object({

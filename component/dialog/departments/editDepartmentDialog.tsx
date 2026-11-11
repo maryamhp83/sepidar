@@ -22,35 +22,26 @@ import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { toast } from "sonner";
 import { Field, FieldError, FieldLabel } from "@/component/ui/field";
 import { Input } from "@/component/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/component/ui/select";
 import { Textarea } from "@/component/ui/textarea";
-import doctors from "@/data/doctors";
+import { updateDepartment } from "@/lib/api/departments";
 
 export default function EditDepartmentDialog({
   data,
   open,
   onOpenChange,
+  refetch,
 }: EditDepartmentDialogProps) {
   const form = useForm<addNewDepartmentFormType>({
     resolver: zodResolver(addNewDepartmentFormSchema),
     defaultValues: {
-      name: data.name,
-      description: data.description,
-      management:
-        doctors.find((item) => item.id === data.management.id)?.id ?? "",
+      name: data?.name ?? "",
+      description: data?.description ?? "",
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (formData: addNewDepartmentFormType) => {
-      // await onSubmit(formData);
-    },
+    mutationFn: async (formData: addNewDepartmentFormType) =>
+      updateDepartment(formData, data?.id ?? ""),
   });
 
   const handleSubmit: SubmitHandler<addNewDepartmentFormType> = async (
@@ -64,12 +55,12 @@ export default function EditDepartmentDialog({
       });
 
       form.reset({
-        name: data.name,
-        description: data.description,
-        management: data.management.id,
+        name: "",
+        description: "",
       });
 
       onOpenChange?.(false);
+      refetch?.();
     } catch {
       toast.error("ویرایش دپارتمان ناموفق بود", {
         description: `متأسفانه اطلاعات دپارتمان «${formData.name}» به‌روزرسانی نشد. لطفاً دوباره تلاش کنید.`,
@@ -129,38 +120,6 @@ export default function EditDepartmentDialog({
                     rows={3}
                     className="resize-none"
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            <Controller
-              name="management"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>مدیر دپارتمان</FieldLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger
-                      id={field.name}
-                      aria-invalid={fieldState.invalid}
-                      className="w-full"
-                    >
-                      <SelectValue placeholder="انتخاب مدیر دپارتمان" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {doctors.map((doctor, index) => (
-                        <SelectItem
-                          key={`department-management-${index}`}
-                          value={doctor.id}
-                        >
-                          {doctor.fullName}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}

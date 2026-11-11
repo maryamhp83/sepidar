@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/component/ui/dialog";
+import { deleteDepartment } from "@/lib/api/departments";
 import { DeleteDepartmentDialogProps } from "@/type/component";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Trash } from "lucide-react";
@@ -19,11 +20,10 @@ export default function DeleteDepartmentDialog({
   data,
   onOpenChange,
   open,
+  refetch,
 }: DeleteDepartmentDialogProps) {
   const mutation = useMutation({
-    mutationFn: async () => {
-      // await onDelete(data.id);
-    },
+    mutationFn: () => deleteDepartment(data?.id ?? ""),
   });
 
   const handleDelete = async () => {
@@ -31,13 +31,14 @@ export default function DeleteDepartmentDialog({
       await mutation.mutateAsync();
 
       toast.success("دپارتمان با موفقیت حذف شد", {
-        description: `دپارتمان «${data.name}» با موفقیت حذف شد.`,
+        description: `دپارتمان «${data?.name ?? "-"}» با موفقیت حذف شد.`,
       });
 
       onOpenChange?.(false);
+      refetch?.();
     } catch {
       toast.error("حذف دپارتمان ناموفق بود", {
-        description: `متأسفانه دپارتمان «${data.name}» حذف نشد. لطفاً دوباره تلاش کنید.`,
+        description: `متأسفانه دپارتمان «${data?.name ?? "-"}» حذف نشد. لطفاً دوباره تلاش کنید.`,
       });
     }
   };
@@ -55,8 +56,8 @@ export default function DeleteDepartmentDialog({
         <DialogHeader className="border-b border-input p-6">
           <DialogTitle>حذف دپارتمان</DialogTitle>
           <DialogDescription>
-            آیا از حذف دپارتمان «{data.name}» اطمینان دارید؟ این عملیات قابل
-            بازگشت نیست.
+            آیا از حذف دپارتمان «{data?.name || "-"}» اطمینان دارید؟ این عملیات
+            قابل بازگشت نیست.
           </DialogDescription>
         </DialogHeader>
 

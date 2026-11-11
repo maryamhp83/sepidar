@@ -10,6 +10,8 @@ import LoadingScreen from "@/component/api/loadingScreen";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { LogIn } from "lucide-react";
+import { getDepartments } from "@/lib/api/departments";
+import { DepartmentsFetchProvider } from "@/context/departmentsFetchContext";
 
 export default function AuthGuard({
   children,
@@ -22,8 +24,19 @@ export default function AuthGuard({
     refetchOnWindowFocus: false,
   });
 
+  const departmentsQuery = useQuery({
+    queryKey: ["departments"],
+    queryFn: getDepartments,
+  });
+
   if (mode === "disabled") {
-    return <AuthFetchProvider value={authQuery}>{children}</AuthFetchProvider>;
+    return (
+      <AuthFetchProvider value={authQuery}>
+        <DepartmentsFetchProvider value={departmentsQuery}>
+          {children}
+        </DepartmentsFetchProvider>
+      </AuthFetchProvider>
+    );
   } else {
     if (authQuery.isPending) {
       return <LoadingScreen />;
@@ -75,7 +88,11 @@ export default function AuthGuard({
       }
 
       return (
-        <AuthFetchProvider value={authQuery}>{children}</AuthFetchProvider>
+        <AuthFetchProvider value={authQuery}>
+          <DepartmentsFetchProvider value={departmentsQuery}>
+            {children}
+          </DepartmentsFetchProvider>
+        </AuthFetchProvider>
       );
     }
   }

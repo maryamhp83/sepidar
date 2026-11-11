@@ -15,7 +15,7 @@ import {
   addNewDepartmentFormSchema,
   addNewDepartmentFormType,
 } from "@/lib/formSchema";
-import { ClassOnlyProps } from "@/type/component";
+import { AddNewDepartmentDialogProps } from "@/type/component";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Plus } from "lucide-react";
@@ -24,32 +24,26 @@ import { SubmitHandler, useForm, Controller } from "react-hook-form";
 import { toast } from "sonner";
 import { Field, FieldError, FieldLabel } from "@/component/ui/field";
 import { Input } from "@/component/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/component/ui/select";
 import { Textarea } from "@/component/ui/textarea";
-import doctors from "@/data/doctors";
+import { createDepartment } from "@/lib/api/departments";
 
-export default function AddNewDepartmentDialog({ className }: ClassOnlyProps) {
+export default function AddNewDepartmentDialog({
+  className,
+  refetch,
+}: AddNewDepartmentDialogProps) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<addNewDepartmentFormType>({
     resolver: zodResolver(addNewDepartmentFormSchema),
     defaultValues: {
       description: "",
-      management: "",
       name: "",
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: addNewDepartmentFormType) => {
-      // await onSubmit(data);
-    },
+    mutationFn: async (data: addNewDepartmentFormType) =>
+      createDepartment(data),
   });
 
   const handleSubmit: SubmitHandler<addNewDepartmentFormType> = async (
@@ -64,6 +58,7 @@ export default function AddNewDepartmentDialog({ className }: ClassOnlyProps) {
 
       form.reset();
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("افزودن دپارتمان ناموفق بود", {
         description: `متأسفانه اطلاعات دپارتمان «${data.name}» ثبت نشد. لطفاً دوباره تلاش کنید.`,
@@ -131,38 +126,6 @@ export default function AddNewDepartmentDialog({ className }: ClassOnlyProps) {
                     rows={3}
                     className="resize-none"
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            <Controller
-              name="management"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>مدیر دپارتمان</FieldLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger
-                      id={field.name}
-                      aria-invalid={fieldState.invalid}
-                      className="w-full"
-                    >
-                      <SelectValue placeholder="انتخاب مدیر دپارتمان" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {doctors.map((doctor, index) => (
-                        <SelectItem
-                          key={`department-management-${index}`}
-                          value={doctor.id}
-                        >
-                          {doctor.fullName}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}

@@ -1,13 +1,7 @@
 "use client";
 
 import { DepartmentCardProps } from "@/type/component";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +11,6 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { Ellipsis, Pen, Trash } from "lucide-react";
-import { formatPersianNumber } from "@/lib/number";
 import EditDepartmentDialog from "../dialog/departments/editDepartmentDialog";
 import { useState } from "react";
 import DeleteDepartmentDialog from "../dialog/departments/deleteDepartmentDialog";
@@ -25,6 +18,7 @@ import DeleteDepartmentDialog from "../dialog/departments/deleteDepartmentDialog
 export default function DepartmentCard({
   className,
   data,
+  refetch,
 }: DepartmentCardProps) {
   const [editDialogOpened, setEditDialogOpened] = useState(false);
   const [deleteDialogOpened, setDeleteDialogOpened] = useState(false);
@@ -35,10 +29,12 @@ export default function DepartmentCard({
         data={data}
         open={editDialogOpened}
         onOpenChange={setEditDialogOpened}
+        refetch={refetch}
       />
       <DeleteDepartmentDialog
         data={data}
         open={deleteDialogOpened}
+        refetch={refetch}
         onOpenChange={setDeleteDialogOpened}
       />
       <Card className={className}>
@@ -71,12 +67,6 @@ export default function DepartmentCard({
           </div>
           <CardDescription>{data.description}</CardDescription>
         </CardHeader>
-        <CardFooter>
-          <ul className="space-y-2 [&>li]:text-sm [&>li]:font-normal">
-            <li>پزشک فعال : {formatPersianNumber(data.doctorsCount)}</li>
-            <li>بیمار فعال : {formatPersianNumber(data.patientsCount)}</li>
-          </ul>
-        </CardFooter>
       </Card>
     </>
   );

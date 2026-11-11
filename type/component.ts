@@ -131,23 +131,23 @@ export type PatientsFilterableTableProps = FilterableTableProps<PatientType[]>;
 
 export type AddNewPatientDialogProps = APIDialogProps<undefined>;
 export type AddNewDoctorDialogProps = APIDialogProps<undefined>;
+export type AddNewDepartmentDialogProps = APIDialogProps<undefined>;
 
 export type EditPatientDialogProps = APIDialogProps<PatientType>;
 export type EditDoctorDialogProps = APIDialogProps<DoctorType>;
+export type EditDepartmentDialogProps = APIDialogProps<Department> &
+  DialogProps;
 
 export type DeletePatientDialogProps = APIDialogProps<PatientType>;
 export type DeleteDoctorDialogProps = APIDialogProps<DoctorType>;
+export type DeleteDepartmentDialogProps = APIDialogProps<Department> &
+  DialogProps;
 
 export interface DepartmentCardProps {
   className?: string;
   data: Department;
+  refetch?: () => void;
 }
-
-export interface EditDepartmentDialogProps extends DialogProps {
-  data: Department;
-}
-
-export type DeleteDepartmentDialogProps = EditDepartmentDialogProps;
 
 export interface DatePickerProps {
   value?: Date;
