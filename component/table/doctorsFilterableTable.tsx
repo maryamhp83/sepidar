@@ -31,8 +31,8 @@ import { Badge } from "../ui/badge";
 import { useState } from "react";
 import EditDoctorDialog from "../dialog/doctors/editDoctorDialog";
 import DeleteDoctorDialog from "../dialog/doctors/deleteDoctorDialog";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
 
 export default function DoctorsFilterableTable({
   data,
@@ -42,6 +42,9 @@ export default function DoctorsFilterableTable({
   const [searchStr, setSearchStr] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("همه");
   const [statusFilter, setStatusFilter] = useState("همه");
+
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
 
   const normalizedSearch = searchStr.trim().toLowerCase();
 
@@ -53,7 +56,7 @@ export default function DoctorsFilterableTable({
       item.phoneNumber.includes(normalizedSearch);
 
     const matchesDepartment =
-      departmentFilter === "همه" || item.department.id === departmentFilter;
+      departmentFilter === "همه" || item.department.$id === departmentFilter;
 
     const matchesStatus =
       statusFilter === "همه" || item.status.id === statusFilter;
@@ -105,7 +108,7 @@ export default function DoctorsFilterableTable({
                 <SelectItem value="همه">همه بخش‌ها</SelectItem>
 
                 {departments.map((department) => (
-                  <SelectItem key={department.id} value={department.id}>
+                  <SelectItem key={department.$id} value={department.$id}>
                     {department.name}
                   </SelectItem>
                 ))}

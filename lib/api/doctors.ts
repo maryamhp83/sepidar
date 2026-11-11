@@ -1,8 +1,7 @@
 import statuses from "@/data/statuses";
 import { addNewDoctorFormType } from "../formSchema";
 import { databaseId, ID, tablesDB, doctorsTableId } from "./client";
-import departments from "@/data/departments";
-import { GETDoctor } from "@/type/api";
+import { GETDepartment, GETDoctor } from "@/type/api";
 
 export async function getDoctors() {
   const response = await tablesDB.listRows<GETDoctor>({
@@ -13,9 +12,12 @@ export async function getDoctors() {
   return response.rows;
 }
 
-export async function createDoctor(data: addNewDoctorFormType) {
+export async function createDoctor(
+  data: addNewDoctorFormType,
+  departments: GETDepartment[],
+) {
   const status = statuses.find((item) => item.id === data.status);
-  const department = departments.find((item) => item.id === data.department);
+  const department = departments.find((item) => item.$id === data.department);
 
   return await tablesDB.createRow({
     databaseId,
@@ -29,9 +31,13 @@ export async function createDoctor(data: addNewDoctorFormType) {
   });
 }
 
-export async function updateDoctor(data: addNewDoctorFormType, id: string) {
+export async function updateDoctor(
+  data: addNewDoctorFormType,
+  id: string,
+  departments: GETDepartment[],
+) {
   const status = statuses.find((item) => item.id === data.status);
-  const department = departments.find((item) => item.id === data.department);
+  const department = departments.find((item) => item.$id === data.department);
 
   return await tablesDB.updateRow({
     databaseId,

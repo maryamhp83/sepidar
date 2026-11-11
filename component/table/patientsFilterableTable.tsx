@@ -4,7 +4,6 @@ import { useState } from "react";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
 import { List } from "lucide-react";
 import { PatientsFilterableTableProps } from "@/type/component";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import { cn } from "cn";
 import { Card, CardHeader, CardTitle } from "../ui/card";
@@ -34,6 +33,7 @@ import { Badge } from "../ui/badge";
 
 import EditPatientDialog from "../dialog/patients/editPatientDialog";
 import DeletePatientDialog from "../dialog/patients/deletePatientDialog";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
 
 export default function PatientsFilterableTable({
   data,
@@ -46,6 +46,9 @@ export default function PatientsFilterableTable({
 
   const normalizedSearch = searchStr.trim().toLowerCase();
 
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
+
   const filteredData = data.filter((item) => {
     const matchesSearch =
       !normalizedSearch ||
@@ -54,7 +57,7 @@ export default function PatientsFilterableTable({
       item.phoneNumber.includes(normalizedSearch);
 
     const matchesDepartment =
-      departmentFilter === "همه" || item.department.id === departmentFilter;
+      departmentFilter === "همه" || item.department.$id === departmentFilter;
 
     const matchesStatus =
       statusFilter === "همه" || item.status.id === statusFilter;
@@ -110,7 +113,7 @@ export default function PatientsFilterableTable({
                 <SelectItem value="همه">همه بخش‌ها</SelectItem>
 
                 {departments.map((department) => (
-                  <SelectItem key={department.id} value={department.id}>
+                  <SelectItem key={department.$id} value={department.$id}>
                     {department.name}
                   </SelectItem>
                 ))}

@@ -1,6 +1,6 @@
 export interface Department {
   name: string;
-  id: string;
+  $id: string;
   description: string;
 }
 

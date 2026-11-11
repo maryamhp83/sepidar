@@ -27,6 +27,7 @@ export default function AuthGuard({
   const departmentsQuery = useQuery({
     queryKey: ["departments"],
     queryFn: getDepartments,
+    enabled: !authQuery.isLoading && !authQuery.isError,
   });
 
   if (mode === "disabled") {
@@ -38,7 +39,7 @@ export default function AuthGuard({
       </AuthFetchProvider>
     );
   } else {
-    if (authQuery.isPending) {
+    if (authQuery.isPending || departmentsQuery.isLoading) {
       return <LoadingScreen />;
     } else {
       const isAuthenticated = authQuery.isSuccess;
@@ -77,7 +78,10 @@ export default function AuthGuard({
         );
       }
 
-      if (mode === "no-auth-only" && isAuthenticated) {
+      if (
+        (mode === "no-auth-only" && isAuthenticated) ||
+        departmentsQuery.isError
+      ) {
         return (
           <AlertScreen
             title="خطای احراز هویت"

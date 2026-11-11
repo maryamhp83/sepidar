@@ -28,9 +28,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/component/ui/select";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import { updateDoctor } from "@/lib/api/doctors";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
 
 export default function EditDoctorDialog({
   className,
@@ -38,19 +38,21 @@ export default function EditDoctorDialog({
   refetch,
 }: EditDoctorDialogProps) {
   const [open, setOpen] = useState(false);
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
   const form = useForm<addNewDoctorFormType>({
     resolver: zodResolver(addNewDoctorFormSchema),
     defaultValues: {
       ...data,
-      department: departments.find((item) => item.id === data?.department.id)
-        ?.id,
+      department: departments.find((item) => item.$id === data?.department.$id)
+        ?.$id,
       status: statuses.find((item) => item.id === data?.status.id)?.id,
     },
   });
 
   const mutation = useMutation({
     mutationFn: (data2: addNewDoctorFormType) =>
-      updateDoctor(data2, data?.id ?? ""),
+      updateDoctor(data2, data?.id ?? "", departments),
   });
 
   const handleSubmit: SubmitHandler<addNewDoctorFormType> = async (data) => {
@@ -174,7 +176,7 @@ export default function EditDoctorDialog({
                       {departments.map((item, index) => (
                         <SelectItem
                           key={`patient-departments-${index}`}
-                          value={item.id}
+                          value={item.$id}
                         >
                           {item.name}
                         </SelectItem>
