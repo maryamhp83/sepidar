@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/component/ui/dialog";
+import { deleteDoctor } from "@/lib/api/doctors";
 import { DeleteDoctorDialogProps } from "@/type/component";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Trash } from "lucide-react";
@@ -20,19 +21,19 @@ import { toast } from "sonner";
 export default function DeleteDoctorDialog({
   className,
   data,
+  refetch,
 }: DeleteDoctorDialogProps) {
   const [open, setOpen] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: async () => {
-      // await onSubmit();
-    },
+    mutationFn: async () => deleteDoctor(data?.id ?? ""),
     onSuccess: () => {
       toast.success("پزشک با موفقیت حذف شد", {
-        description: `اطلاعات پزشک «${data.fullName}» با موفقیت از سیستم حذف شد.`,
+        description: `اطلاعات پزشک «${data?.fullName ?? "-"}» با موفقیت از سیستم حذف شد.`,
       });
 
       setOpen(false);
+      refetch?.();
     },
     onError: () => {
       toast.error("حذف پزشک ناموفق بود", {
@@ -63,8 +64,8 @@ export default function DeleteDoctorDialog({
         <DialogHeader>
           <DialogTitle>حذف پزشک</DialogTitle>
           <DialogDescription>
-            آیا از حذف پزشک «{data.fullName}» اطمینان دارید؟ این عملیات قابل
-            بازگشت نیست.
+            آیا از حذف پزشک «{data?.fullName || "-"}» اطمینان دارید؟ این عملیات
+            قابل بازگشت نیست.
           </DialogDescription>
         </DialogHeader>
 

@@ -37,6 +37,7 @@ import statuses from "@/data/statuses";
 export default function DoctorsFilterableTable({
   data,
   className,
+  refetch,
 }: DoctorsFilterableTableProps) {
   const [searchStr, setSearchStr] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("همه");
@@ -175,8 +176,8 @@ export default function DoctorsFilterableTable({
                     </Badge>
                   </TableCell>
                   <TableCell className="flex items-center justify-end gap-2">
-                    <EditDoctorDialog data={item} />
-                    <DeleteDoctorDialog data={item} />
+                    <EditDoctorDialog data={item} refetch={refetch} />
+                    <DeleteDoctorDialog data={item} refetch={refetch} />
                   </TableCell>
                 </TableRow>
               ))}

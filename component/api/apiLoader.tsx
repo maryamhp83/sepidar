@@ -2,9 +2,9 @@
 
 import { ApiLoaderProps } from "@/type/component";
 import LoadingScreen from "./loadingScreen";
-import { Button } from "@base-ui/react";
 import AlertScreen from "./alertScreen";
 import { RefreshCcw } from "lucide-react";
+import { Button } from "../ui/button";
 
 export default function ApiLoader({
   children,

@@ -120,22 +120,20 @@ export interface RecentHospitolizedTableProps {
   }[];
 }
 
-export interface PatientsFilterableTableProps {
-  className?: string;
-  data: PatientType[];
-  refetch?: () => void;
-}
-
 export interface FilterableTableProps<T> {
   className?: string;
   data: T;
+  refetch?: () => void;
 }
 
 export type DoctorsFilterableTableProps = FilterableTableProps<DoctorType[]>;
+export type PatientsFilterableTableProps = FilterableTableProps<PatientType[]>;
 
 export type AddNewPatientDialogProps = APIDialogProps<undefined>;
+export type AddNewDoctorDialogProps = APIDialogProps<undefined>;
 
 export type EditPatientDialogProps = APIDialogProps<PatientType>;
+export type EditDoctorDialogProps = APIDialogProps<DoctorType>;
 
 export type DeletePatientDialogProps = APIDialogProps<PatientType>;
 export type DeleteDoctorDialogProps = APIDialogProps<DoctorType>;

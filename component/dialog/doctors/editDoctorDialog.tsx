@@ -30,27 +30,27 @@ import {
 } from "@/component/ui/select";
 import departments from "@/data/departments";
 import statuses from "@/data/statuses";
+import { updateDoctor } from "@/lib/api/doctors";
 
 export default function EditDoctorDialog({
   className,
   data,
+  refetch,
 }: EditDoctorDialogProps) {
   const [open, setOpen] = useState(false);
-
   const form = useForm<addNewDoctorFormType>({
     resolver: zodResolver(addNewDoctorFormSchema),
     defaultValues: {
       ...data,
-      department: departments.find((item) => item.id === data.department.id)
+      department: departments.find((item) => item.id === data?.department.id)
         ?.id,
-      status: statuses.find((item) => item.id === data.status.id)?.id,
+      status: statuses.find((item) => item.id === data?.status.id)?.id,
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: addNewDoctorFormType) => {
-      // await onSubmit(data);
-    },
+    mutationFn: (data2: addNewDoctorFormType) =>
+      updateDoctor(data2, data?.id ?? ""),
   });
 
   const handleSubmit: SubmitHandler<addNewDoctorFormType> = async (data) => {
@@ -63,6 +63,7 @@ export default function EditDoctorDialog({
 
       form.reset(data);
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("ویرایش اطلاعات پزشک ناموفق بود", {
         description: `متأسفانه اطلاعات دکتر «${data.fullName}» ویرایش نشد. لطفاً دوباره تلاش کنید.`,

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import MainLayout from "@/component/layout/mainLayout";
 import StaticBreadCrumb from "@/component/staticBreadcrumb";
-import AddNewDoctorDialog from "@/component/dialog/doctors/addNewDoctorDialog";
-import DoctorsFilterableTable from "@/component/table/doctorsFilterableTable";
-import doctors from "@/data/doctors";
+import DoctorsPageContainer from "@/component/container/doctorsPageContainer";
 
 const title = "مدیریت پزشکان";
 
@@ -16,13 +14,7 @@ export default function DoctorsPage() {
     <MainLayout>
       <StaticBreadCrumb className="mb-5" values={["سپیدار", title]} />
       <h1 className="font-bold text-xl truncate mb-1">{title}</h1>
-      <div className="flex items-center justify-between gap-4 mb-8">
-        <span className="font-normal text-sm truncate block flex-1 text-muted-foreground">
-          اطلاعات، برنامه کاری و وضعیت پزشکان
-        </span>
-        <AddNewDoctorDialog />
-      </div>
-      <DoctorsFilterableTable data={doctors} />
+      <DoctorsPageContainer />
     </MainLayout>
   );
 }

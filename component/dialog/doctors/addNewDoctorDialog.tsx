@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/component/ui/dialog";
 import { addNewDoctorFormSchema, addNewDoctorFormType } from "@/lib/formSchema";
-import { ClassOnlyProps } from "@/type/component";
+import { AddNewDoctorDialogProps } from "@/type/component";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Plus } from "lucide-react";
@@ -30,8 +30,12 @@ import {
 } from "@/component/ui/select";
 import departments from "@/data/departments";
 import statuses from "@/data/statuses";
+import { createDoctor } from "@/lib/api/doctors";
 
-export default function AddNewDoctorDialog({ className }: ClassOnlyProps) {
+export default function AddNewDoctorDialog({
+  className,
+  refetch,
+}: AddNewDoctorDialogProps) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<addNewDoctorFormType>({
@@ -46,9 +50,7 @@ export default function AddNewDoctorDialog({ className }: ClassOnlyProps) {
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: addNewDoctorFormType) => {
-      // await onSubmit(data);
-    },
+    mutationFn: (data: addNewDoctorFormType) => createDoctor(data),
   });
 
   const handleSubmit: SubmitHandler<addNewDoctorFormType> = async (data) => {
@@ -61,6 +63,7 @@ export default function AddNewDoctorDialog({ className }: ClassOnlyProps) {
 
       form.reset();
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("افزودن پزشک ناموفق بود", {
         description: `متأسفانه اطلاعات دکتر «${data.fullName}» ثبت نشد. لطفاً دوباره تلاش کنید.`,
