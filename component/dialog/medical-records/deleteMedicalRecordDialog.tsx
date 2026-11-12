@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/component/ui/dialog";
+import { deleteMedicalRecord } from "@/lib/api/medicalRecords";
 import { DeleteMedicalRecordDialogProps } from "@/type/component";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Trash } from "lucide-react";
@@ -19,19 +20,19 @@ import { toast } from "sonner";
 
 export default function DeleteMedicalRecordDialog({
   data,
+  refetch,
 }: DeleteMedicalRecordDialogProps) {
   const [open, setOpen] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: async () => {
-      // await onSubmit(data.id);
-    },
+    mutationFn: () => deleteMedicalRecord(data?.id ?? ""),
     onSuccess: () => {
       toast.success("پرونده پزشکی با موفقیت حذف شد", {
-        description: `پرونده پزشکی بیمار «${data.fullName}» با موفقیت از سیستم حذف شد.`,
+        description: `پرونده پزشکی بیمار «${data?.fullName ?? "-"}» با موفقیت از سیستم حذف شد.`,
       });
 
       setOpen(false);
+      refetch?.();
     },
     onError: () => {
       toast.error("حذف پرونده پزشکی ناموفق بود", {
@@ -62,8 +63,8 @@ export default function DeleteMedicalRecordDialog({
         <DialogHeader>
           <DialogTitle>حذف پرونده پزشکی</DialogTitle>
           <DialogDescription>
-            آیا از حذف پرونده پزشکی بیمار «{data.fullName}» اطمینان دارید؟ این
-            عملیات قابل بازگشت نیست.
+            آیا از حذف پرونده پزشکی بیمار «{data?.fullName ?? "-"}» اطمینان
+            دارید؟ این عملیات قابل بازگشت نیست.
           </DialogDescription>
         </DialogHeader>
 

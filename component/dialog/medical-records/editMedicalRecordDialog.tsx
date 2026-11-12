@@ -31,31 +31,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/component/ui/select";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import DatePicker from "@/component/ui/datePicker";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
+import { updateMedicalRecord } from "@/lib/api/medicalRecords";
 
 export default function EditMedicalRecordDialog({
   data,
+  refetch,
 }: EditMedicalRecordDialogProps) {
   const [open, setOpen] = useState(false);
+
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
 
   const form = useForm<addNewMedicalRecordFormType>({
     resolver: zodResolver(addNewMedicalRecordFormSchema),
     defaultValues: {
-      fullName: data.fullName,
-      nationalCode: data.nationalCode,
-      phoneNumber: data.phoneNumber,
-      date: new Date(data.date),
-      department: data.department.id,
-      status: data.status.id,
+      fullName: data?.fullName,
+      nationalCode: data?.nationalCode,
+      phoneNumber: data?.phoneNumber,
+      date: data?.date ? new Date(data.date) : new Date(),
+      department: data?.department.$id,
+      status: data?.status.id,
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (formData: addNewMedicalRecordFormType) => {
-      // await onSubmit(data.id, formData);
-    },
+    mutationFn: async (formData: addNewMedicalRecordFormType) =>
+      updateMedicalRecord(formData, data?.id ?? "", departments),
   });
 
   const handleSubmit: SubmitHandler<addNewMedicalRecordFormType> = async (
@@ -69,6 +73,7 @@ export default function EditMedicalRecordDialog({
       });
 
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("ویرایش پرونده پزشکی ناموفق بود", {
         description: `متأسفانه اطلاعات پرونده پزشکی بیمار «${formData.fullName}» به‌روزرسانی نشد. لطفاً دوباره تلاش کنید.`,
@@ -83,12 +88,12 @@ export default function EditMedicalRecordDialog({
         if (!form.formState.isSubmitting) {
           if (nextOpen) {
             form.reset({
-              fullName: data.fullName,
-              nationalCode: data.nationalCode,
-              phoneNumber: data.phoneNumber,
-              date: new Date(data.date),
-              department: data.department.id,
-              status: data.status.id,
+              fullName: data?.fullName,
+              nationalCode: data?.nationalCode,
+              phoneNumber: data?.phoneNumber,
+              date: data?.date ? new Date(data.date) : new Date(),
+              department: data?.department.$id,
+              status: data?.status.id,
             });
           }
 
@@ -194,7 +199,7 @@ export default function EditMedicalRecordDialog({
                     </SelectTrigger>
                     <SelectContent>
                       {departments.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
+                        <SelectItem key={item.$id} value={item.$id}>
                           {item.name}
                         </SelectItem>
                       ))}

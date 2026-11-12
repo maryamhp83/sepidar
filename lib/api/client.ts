@@ -21,5 +21,8 @@ export const departmentsTableId =
 export const appointmentsTableId =
   process.env.NEXT_PUBLIC_APPWRITE_APPOINTMENTS_TABLE_ID!;
 
+export const medicalRecordsTableId =
+  process.env.NEXT_PUBLIC_APPWRITE_MEDICAL_RECORDS_TABLE_ID!;
+
 export { ID };
 export { client };

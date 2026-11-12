@@ -38,3 +38,12 @@ export interface GETBeds extends Models.Row {
   status: string; // strigified type of Status
   department: string; // strigified type of Department
 }
+
+export interface GETMedicalRecords extends Models.Row {
+  fullName: string;
+  nationalCode: string;
+  phoneNumber: string;
+  date: string;
+  status: string; // strigified type of Status
+  department: string; // strigified type of Department
+}

@@ -15,7 +15,7 @@ import {
   addNewMedicalRecordFormSchema,
   addNewMedicalRecordFormType,
 } from "@/lib/formSchema";
-import { ClassOnlyProps } from "@/type/component";
+import { AddNewMedicalRecordDialogProps } from "@/type/component";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Plus } from "lucide-react";
@@ -31,14 +31,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/component/ui/select";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import DatePicker from "@/component/ui/datePicker";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
+import { createMedicalRecord } from "@/lib/api/medicalRecords";
 
 export default function AddNewMedicalRecordDialog({
   className,
-}: ClassOnlyProps) {
+  refetch,
+}: AddNewMedicalRecordDialogProps) {
   const [open, setOpen] = useState(false);
+
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
 
   const form = useForm<addNewMedicalRecordFormType>({
     resolver: zodResolver(addNewMedicalRecordFormSchema),
@@ -53,9 +58,8 @@ export default function AddNewMedicalRecordDialog({
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: addNewMedicalRecordFormType) => {
-      // await onSubmit(data);
-    },
+    mutationFn: async (data: addNewMedicalRecordFormType) =>
+      createMedicalRecord(data, departments),
   });
 
   const handleSubmit: SubmitHandler<addNewMedicalRecordFormType> = async (
@@ -70,6 +74,7 @@ export default function AddNewMedicalRecordDialog({
 
       form.reset();
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("ثبت پرونده پزشکی ناموفق بود", {
         description: `متأسفانه پرونده پزشکی بیمار «${data.fullName}» ثبت نشد. لطفاً دوباره تلاش کنید.`,
@@ -184,7 +189,7 @@ export default function AddNewMedicalRecordDialog({
                     </SelectTrigger>
                     <SelectContent>
                       {departments.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
+                        <SelectItem key={item.$id} value={item.$id}>
                           {item.name}
                         </SelectItem>
                       ))}
