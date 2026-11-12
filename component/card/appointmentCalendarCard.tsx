@@ -25,19 +25,11 @@ export default function AppointmentCalendarCard({
 }: AppointmentsCalendarCardProps) {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  // Jalali month information
   const monthStart = startOfMonth(selectedDate);
   const daysInMonth = getDaysInMonth(selectedDate);
-
-  // Saturday = 0, Sunday = 1, ..., Friday = 6
   const firstDayOffset = (monthStart.getDay() + 1) % 7;
-
   const monthInfo = digitsEnToFa(format(selectedDate, "MMMM yyyy"));
-
-  // Calculate the required number of calendar rows
   const totalRows = Math.ceil((firstDayOffset + daysInMonth) / 7);
-
-  // Always render complete rows of 7 days
   const totalCells = totalRows * 7;
 
   return (
@@ -65,8 +57,6 @@ export default function AppointmentCalendarCard({
           <ChevronLeft />
         </Button>
       </CardHeader>
-
-      {/* Weekdays */}
       <div className="grid grid-cols-7">
         {weekDays.map((day, index) => (
           <div
@@ -77,15 +67,12 @@ export default function AppointmentCalendarCard({
           </div>
         ))}
       </div>
-
-      {/* Calendar days */}
       <div className="grid grid-cols-7">
         {Array.from({ length: totalCells }, (_, index) => {
           const dayNumber = index - firstDayOffset + 1;
 
           const isValidDay = dayNumber > 0 && dayNumber <= daysInMonth;
 
-          // Border logic
           const isLastColumn = index % 7 === 6;
           const isLastRow = Math.floor(index / 7) === totalRows - 1;
 
@@ -95,7 +82,6 @@ export default function AppointmentCalendarCard({
             isLastRow && "border-b-0",
           );
 
-          // Empty cells before and after the month
           if (!isValidDay) {
             return (
               <div
@@ -104,8 +90,6 @@ export default function AppointmentCalendarCard({
               />
             );
           }
-
-          // Generate the actual Jalali date
           const dateOfItem = addDays(monthStart, dayNumber - 1);
 
           const dateAppointments = data.filter((appointment) =>

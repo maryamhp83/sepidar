@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/component/ui/dialog";
 import { addNewBedFormSchema, addNewBedFormType } from "@/lib/formSchema";
-import { ClassOnlyProps } from "@/type/component";
+import { AddNewBedDialogProps, ClassOnlyProps } from "@/type/component";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Plus } from "lucide-react";
@@ -28,13 +28,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/component/ui/select";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import DatePicker from "@/component/ui/datePicker";
 import type { DateRange } from "react-day-picker";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
+import { createBed } from "@/lib/api/beds";
 
-export default function AddNewBedDialog({ className }: ClassOnlyProps) {
+export default function AddNewBedDialog({
+  className,
+  refetch,
+}: AddNewBedDialogProps) {
   const [open, setOpen] = useState(false);
+
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
 
   const form = useForm<addNewBedFormType>({
     resolver: zodResolver(addNewBedFormSchema),
@@ -50,9 +57,7 @@ export default function AddNewBedDialog({ className }: ClassOnlyProps) {
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: addNewBedFormType) => {
-      // await onSubmit(data);
-    },
+    mutationFn: async (data: addNewBedFormType) => createBed(data, departments),
   });
 
   const handleSubmit: SubmitHandler<addNewBedFormType> = async (data) => {
@@ -65,6 +70,7 @@ export default function AddNewBedDialog({ className }: ClassOnlyProps) {
 
       form.reset();
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("ثبت بستری ناموفق بود", {
         description: `متأسفانه اطلاعات بستری بیمار «${data.fullName}» ثبت نشد. لطفاً دوباره تلاش کنید.`,
@@ -197,7 +203,7 @@ export default function AddNewBedDialog({ className }: ClassOnlyProps) {
                     </SelectTrigger>
                     <SelectContent>
                       {departments.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
+                        <SelectItem key={item.$id} value={item.$id}>
                           {item.name}
                         </SelectItem>
                       ))}

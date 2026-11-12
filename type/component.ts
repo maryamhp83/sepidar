@@ -128,6 +128,7 @@ export interface FilterableTableProps<T> {
 
 export type DoctorsFilterableTableProps = FilterableTableProps<DoctorType[]>;
 export type PatientsFilterableTableProps = FilterableTableProps<PatientType[]>;
+export type BedsFilterableTableProps = FilterableTableProps<BedType[]>;
 export type AppointmentsFilterableTableProps = FilterableTableProps<
   AppointmentType[]
 >;
@@ -136,15 +137,18 @@ export type AddNewPatientDialogProps = APIDialogProps<undefined>;
 export type AddNewDoctorDialogProps = APIDialogProps<undefined>;
 export type AddNewDepartmentDialogProps = APIDialogProps<undefined>;
 export type AddNewAppointmentDialogProps = APIDialogProps<undefined>;
+export type AddNewBedDialogProps = APIDialogProps<undefined>;
 
 export type EditPatientDialogProps = APIDialogProps<PatientType>;
 export type EditAppointmentDialogProps = APIDialogProps<AppointmentType>;
+export type EditBedDialogProps = APIDialogProps<BedType>;
 export type EditDoctorDialogProps = APIDialogProps<DoctorType>;
 export type EditDepartmentDialogProps = APIDialogProps<Department> &
   DialogProps;
 
 export type DeletePatientDialogProps = APIDialogProps<PatientType>;
 export type DeleteDoctorDialogProps = APIDialogProps<DoctorType>;
+export type DeleteBedDialogProps = APIDialogProps<BedType>;
 export type DeleteAppointmentDialogProps = APIDialogProps<AppointmentType>;
 export type DeleteDepartmentDialogProps = APIDialogProps<Department> &
   DialogProps;
@@ -175,17 +179,6 @@ export interface AppointmentsCalendarCardProps {
   className?: string;
   data: AppointmentType[];
 }
-
-export interface BedsFilterableTableProps {
-  className?: string;
-  data: BedType[];
-}
-
-export interface EditBedDialogProps {
-  data: BedType;
-}
-
-export type DeleteBedDialogProps = EditBedDialogProps;
 
 export interface MedicalRecordsFilterableTableProps {
   className?: string;

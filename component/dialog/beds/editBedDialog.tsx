@@ -28,30 +28,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/component/ui/select";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import DatePicker from "@/component/ui/datePicker";
 import type { DateRange } from "react-day-picker";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
+import { updateBed } from "@/lib/api/beds";
 
-export default function EditBedDialog({ data }: EditBedDialogProps) {
+export default function EditBedDialog({ data, refetch }: EditBedDialogProps) {
   const [open, setOpen] = useState(false);
+
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
 
   const form = useForm<addNewBedFormType>({
     resolver: zodResolver(addNewBedFormSchema),
     defaultValues: {
       ...data,
-      fromDate: new Date(data.date.from),
-      toDate: new Date(data.date.to),
-      department: departments.find((item) => item.id === data.department.id)
-        ?.id,
-      status: statuses.find((item) => item.id === data.status.id)?.id,
+      fromDate: new Date(data?.date.from ?? ""),
+      toDate: new Date(data?.date.to ?? ""),
+      department: departments.find((item) => item.$id === data?.department.$id)
+        ?.$id,
+      status: statuses.find((item) => item.id === data?.status.id)?.id,
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (formData: addNewBedFormType) => {
-      // await onSubmit(data.id, formData);
-    },
+    mutationFn: async (formData: addNewBedFormType) =>
+      updateBed(formData, data?.id ?? "", departments),
   });
 
   const handleSubmit: SubmitHandler<addNewBedFormType> = async (formData) => {
@@ -63,6 +66,7 @@ export default function EditBedDialog({ data }: EditBedDialogProps) {
       });
 
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("ویرایش اطلاعات بستری ناموفق بود", {
         description: `متأسفانه اطلاعات بستری بیمار «${formData.fullName}» ویرایش نشد. لطفاً دوباره تلاش کنید.`,
@@ -195,7 +199,7 @@ export default function EditBedDialog({ data }: EditBedDialogProps) {
                     </SelectTrigger>
                     <SelectContent>
                       {departments.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
+                        <SelectItem key={item.$id} value={item.$id}>
                           {item.name}
                         </SelectItem>
                       ))}

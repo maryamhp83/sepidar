@@ -11,25 +11,28 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/component/ui/dialog";
+import { deleteBed } from "@/lib/api/beds";
 import { DeleteBedDialogProps } from "@/type/component";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Trash } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function DeleteBedDialog({ data }: DeleteBedDialogProps) {
+export default function DeleteBedDialog({
+  data,
+  refetch,
+}: DeleteBedDialogProps) {
   const [open, setOpen] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: async () => {
-      // await onSubmit(data.id);
-    },
+    mutationFn: async () => deleteBed(data?.id ?? "-"),
     onSuccess: () => {
       toast.success("بستری با موفقیت حذف شد", {
-        description: `اطلاعات بستری بیمار «${data.fullName}» با موفقیت از سیستم حذف شد.`,
+        description: `اطلاعات بستری بیمار «${data?.fullName ?? "-"}» با موفقیت از سیستم حذف شد.`,
       });
 
       setOpen(false);
+      refetch?.();
     },
     onError: () => {
       toast.error("حذف بستری ناموفق بود", {
@@ -60,8 +63,8 @@ export default function DeleteBedDialog({ data }: DeleteBedDialogProps) {
         <DialogHeader>
           <DialogTitle>حذف اطلاعات بستری</DialogTitle>
           <DialogDescription>
-            آیا از حذف اطلاعات بستری بیمار «{data.fullName}» اطمینان دارید؟ این
-            عملیات قابل بازگشت نیست.
+            آیا از حذف اطلاعات بستری بیمار «{data?.fullName ?? "-"}» اطمینان
+            دارید؟ این عملیات قابل بازگشت نیست.
           </DialogDescription>
         </DialogHeader>
 

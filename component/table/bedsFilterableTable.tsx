@@ -29,17 +29,18 @@ import {
 import { cn } from "cn";
 import { digitsEnToFa } from "@persian-tools/persian-tools";
 import { Badge } from "../ui/badge";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import DatePicker from "../ui/datePicker";
 import { persianNoTimeDateFormatter } from "@/lib/date";
 import type { DateRange } from "react-day-picker";
 import EditBedDialog from "../dialog/beds/editBedDialog";
 import DeleteBedDialog from "../dialog/beds/deleteBedDialog";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
 
 export default function BedsFilterableTable({
   data,
   className,
+  refetch,
 }: BedsFilterableTableProps) {
   const [searchStr, setSearchStr] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("همه");
@@ -47,6 +48,9 @@ export default function BedsFilterableTable({
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
 
   const normalizedSearch = searchStr.trim().toLowerCase();
+
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
 
   const filteredData = data.filter((item) => {
     const matchesSearch =
@@ -56,7 +60,7 @@ export default function BedsFilterableTable({
       item.phoneNumber.includes(normalizedSearch);
 
     const matchesDepartment =
-      departmentFilter === "همه" || item.department.id === departmentFilter;
+      departmentFilter === "همه" || item.department.$id === departmentFilter;
 
     const matchesStatus =
       statusFilter === "همه" || item.status.id === statusFilter;
@@ -67,7 +71,6 @@ export default function BedsFilterableTable({
     const filterStartDate = dateRange?.from;
     const filterEndDate = dateRange?.to ?? filterStartDate;
 
-    // Check whether the hospitalization period overlaps the selected range.
     const matchesDate =
       !filterStartDate ||
       (bedStartDate <= filterEndDate! && bedEndDate >= filterStartDate);
@@ -119,7 +122,7 @@ export default function BedsFilterableTable({
             <SelectContent>
               <SelectItem value="همه">همه بخش‌ها</SelectItem>
               {departments.map((department) => (
-                <SelectItem key={department.id} value={department.id}>
+                <SelectItem key={department.$id} value={department.$id}>
                   {department.name}
                 </SelectItem>
               ))}
@@ -219,8 +222,8 @@ export default function BedsFilterableTable({
                   </Badge>
                 </TableCell>
                 <TableCell className="flex items-center justify-end gap-2">
-                  <EditBedDialog data={item} />
-                  <DeleteBedDialog data={item} />
+                  <EditBedDialog refetch={refetch} data={item} />
+                  <DeleteBedDialog refetch={refetch} data={item} />
                 </TableCell>
               </TableRow>
             ))}
