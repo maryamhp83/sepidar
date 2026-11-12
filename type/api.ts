@@ -1,10 +1,5 @@
 import { Models } from "appwrite";
-import {
-  AppointmentsChartCardProps,
-  BedOccupancyCardProps,
-  RecentAppointmentsTableProps,
-  RecentHospitolizedTableProps,
-} from "./component";
+import { AppointmentsChartCardProps, BedOccupancyCardProps } from "./component";
 
 export interface GETPatient extends Models.Row {
   fullName: string;

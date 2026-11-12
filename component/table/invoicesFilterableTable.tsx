@@ -98,7 +98,7 @@ export default function InvoicesFilterableTable({
             value={statusFilter}
             onValueChange={(value) => setStatusFilter(value as string)}
           >
-            <SelectTrigger>
+            <SelectTrigger className={"lg:w-auto w-full"}>
               <SelectValue placeholder="انتخاب وضعیت پرداخت" />
             </SelectTrigger>
             <SelectContent>

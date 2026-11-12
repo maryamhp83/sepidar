@@ -108,7 +108,7 @@ export default function MedicalRecordsFilterableTable({
             value={departmentFilter}
             onValueChange={(value) => setDepartmentFilter(value as string)}
           >
-            <SelectTrigger>
+            <SelectTrigger className={"lg:w-auto w-full"}>
               <SelectValue placeholder="انتخاب بخش درمانی" />
             </SelectTrigger>
             <SelectContent>
@@ -125,7 +125,7 @@ export default function MedicalRecordsFilterableTable({
             value={statusFilter}
             onValueChange={(value) => setStatusFilter(value as string)}
           >
-            <SelectTrigger>
+            <SelectTrigger className={"lg:w-auto w-full"}>
               <SelectValue placeholder="انتخاب وضعیت" />
             </SelectTrigger>
             <SelectContent>

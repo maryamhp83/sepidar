@@ -97,7 +97,7 @@ export default function PatientsFilterableTable({
           <div className="flex-1 flex lg:flex-row flex-col lg:items-center justify-end gap-3 flex-wrap lg:w-auto w-full">
             <Input
               placeholder="جست‌وجو در مدیریت بیماران..."
-              className="w-62"
+              className="lg:w-62 w-full"
               value={searchStr}
               onChange={(e) => setSearchStr(e.target.value)}
             />
@@ -105,7 +105,7 @@ export default function PatientsFilterableTable({
               value={departmentFilter}
               onValueChange={(value) => setDepartmentFilter(value as string)}
             >
-              <SelectTrigger>
+              <SelectTrigger className={"lg:w-auto w-full"}>
                 <SelectValue placeholder="انتخاب بخش درمانی" />
               </SelectTrigger>
 
@@ -123,7 +123,7 @@ export default function PatientsFilterableTable({
               value={statusFilter}
               onValueChange={(value) => setStatusFilter(value as string)}
             >
-              <SelectTrigger>
+              <SelectTrigger className={"lg:w-auto w-full"}>
                 <SelectValue placeholder="انتخاب وضعیت بیمار" />
               </SelectTrigger>
               <SelectContent>

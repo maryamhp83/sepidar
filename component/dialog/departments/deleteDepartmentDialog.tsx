@@ -23,7 +23,7 @@ export default function DeleteDepartmentDialog({
   refetch,
 }: DeleteDepartmentDialogProps) {
   const mutation = useMutation({
-    mutationFn: () => deleteDepartment(data?.id ?? ""),
+    mutationFn: () => deleteDepartment(data?.$id ?? ""),
   });
 
   const handleDelete = async () => {

@@ -48,7 +48,6 @@ export default function DepartmentsPageContainer() {
               refetch={departmentsFetch.refetch}
               data={{
                 ...item,
-                id: item.$id,
               }}
             />
           ))}

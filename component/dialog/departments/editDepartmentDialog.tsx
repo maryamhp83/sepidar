@@ -41,7 +41,7 @@ export default function EditDepartmentDialog({
 
   const mutation = useMutation({
     mutationFn: async (formData: addNewDepartmentFormType) =>
-      updateDepartment(formData, data?.id ?? ""),
+      updateDepartment(formData, data?.$id ?? ""),
   });
 
   const handleSubmit: SubmitHandler<addNewDepartmentFormType> = async (
