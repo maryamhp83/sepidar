@@ -42,7 +42,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
               dir="ltr"
             >
               <pre className="text-start font-mono">
-                <p>{JSON.stringify(error, null, 2)}</p>
+                <p>{JSON.stringify(error.message, null, 2)}</p>
               </pre>
             </div>
           </Card>

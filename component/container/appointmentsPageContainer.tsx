@@ -7,6 +7,7 @@ import ApiLoader from "../api/apiLoader";
 import { useQuery } from "@tanstack/react-query";
 import { getAppointments } from "@/lib/api/appointments";
 import { Department, StatusType } from "@/type/general";
+import AppointmentCalendarCard from "../card/appointmentCalendarCard";
 
 export default function AppointmentsPageContainer() {
   const query = useQuery({
@@ -34,26 +35,40 @@ export default function AppointmentsPageContainer() {
           <TabsTrigger value={"table"}>جدول</TabsTrigger>
           <TabsTrigger value={"calendar"}>تقویم</TabsTrigger>
         </TabsList>
-      </Tabs>
-      <TabsContent value={"table"}>
-        <AppointmentsFilterableTable
-          data={appointments.map((item) => {
-            const status = JSON.parse(item.status) as StatusType;
-            const department = JSON.parse(item.department) as Department;
+        <TabsContent value={"table"}>
+          <AppointmentsFilterableTable
+            refetch={query.refetch}
+            data={appointments.map((item) => {
+              const status = JSON.parse(item.status) as StatusType;
+              const department = JSON.parse(item.department) as Department;
 
-            return {
-              ...item,
-              createdAt: item.$createdAt,
-              department,
-              status,
-              id: item.$id,
-            };
-          })}
-        />
-      </TabsContent>
-      <TabsContent value={"calendar"}></TabsContent>
+              return {
+                ...item,
+                createdAt: item.$createdAt,
+                department,
+                status,
+                id: item.$id,
+              };
+            })}
+          />
+        </TabsContent>
+        <TabsContent value={"calendar"}>
+          <AppointmentCalendarCard
+            data={appointments.map((item) => {
+              const status = JSON.parse(item.status) as StatusType;
+              const department = JSON.parse(item.department) as Department;
+
+              return {
+                ...item,
+                createdAt: item.$createdAt,
+                department,
+                status,
+                id: item.$id,
+              };
+            })}
+          />
+        </TabsContent>
+      </Tabs>
     </ApiLoader>
   );
 }
-
-// <AppointmentCalendarCard data={appointments} />

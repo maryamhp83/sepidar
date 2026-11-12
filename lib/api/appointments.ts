@@ -32,7 +32,7 @@ export async function createAppointment(
   });
 }
 
-export async function updateDoctor(
+export async function updateAppointment(
   data: addNewAppointmentFormType,
   id: string,
   departments: GETDepartment[],
@@ -53,7 +53,7 @@ export async function updateDoctor(
   });
 }
 
-export async function deleteDoctor(id: string) {
+export async function deleteAppointment(id: string) {
   return await tablesDB.deleteRow({
     databaseId,
     rowId: id,

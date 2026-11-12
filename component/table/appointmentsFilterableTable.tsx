@@ -39,6 +39,7 @@ import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
 export default function AppointmentsFilterableTable({
   data,
   className,
+  refetch,
 }: AppointmentsFilterableTableProps) {
   const [searchStr, setSearchStr] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("همه");
@@ -196,7 +197,10 @@ export default function AppointmentsFilterableTable({
                       {item.status.name}
                     </Badge>
                   </TableCell>
-                  <TableCell className="flex items-center justify-end gap-2"></TableCell>
+                  <TableCell className="flex items-center justify-end gap-2">
+                    <EditAppointmentDialog data={item} refetch={refetch} />
+                    <DeleteAppointmentDialog data={item} refetch={refetch} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/component/ui/dialog";
+import { deleteAppointment } from "@/lib/api/appointments";
 import { DeleteAppointmentDialogProps } from "@/type/component";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Trash } from "lucide-react";
@@ -19,19 +20,19 @@ import { toast } from "sonner";
 
 export default function DeleteAppointmentDialog({
   data,
+  refetch,
 }: DeleteAppointmentDialogProps) {
   const [open, setOpen] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: async () => {
-      // await onSubmit(data.id);
-    },
+    mutationFn: async () => deleteAppointment(data?.id ?? ""),
     onSuccess: () => {
       toast.success("نوبت با موفقیت حذف شد", {
-        description: `نوبت بیمار «${data.fullName}» با موفقیت از سیستم حذف شد.`,
+        description: `نوبت بیمار «${data?.fullName ?? "-"}» با موفقیت از سیستم حذف شد.`,
       });
 
       setOpen(false);
+      refetch?.();
     },
     onError: () => {
       toast.error("حذف نوبت ناموفق بود", {
@@ -61,8 +62,8 @@ export default function DeleteAppointmentDialog({
         <DialogHeader>
           <DialogTitle>حذف نوبت</DialogTitle>
           <DialogDescription>
-            آیا از حذف نوبت بیمار «{data.fullName}» اطمینان دارید؟ این عملیات
-            قابل بازگشت نیست.
+            آیا از حذف نوبت بیمار «{data?.fullName ?? "-"}» اطمینان دارید؟ این
+            عملیات قابل بازگشت نیست.
           </DialogDescription>
         </DialogHeader>
 

@@ -31,31 +31,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/component/ui/select";
-import departments from "@/data/departments";
 import statuses from "@/data/statuses";
 import DatePicker from "@/component/ui/datePicker";
+import { useDepartmentsFetch } from "@/context/departmentsFetchContext";
+import { updateAppointment } from "@/lib/api/appointments";
 
 export default function EditAppointmentDialog({
   data,
+  refetch,
 }: EditAppointmentDialogProps) {
   const [open, setOpen] = useState(false);
+
+  const departmentsFetch = useDepartmentsFetch();
+  const departments = departmentsFetch.data ?? [];
 
   const form = useForm<addNewAppointmentFormType>({
     resolver: zodResolver(addNewAppointmentFormSchema),
     defaultValues: {
-      fullName: data.fullName,
-      nationalCode: data.nationalCode,
-      phoneNumber: data.phoneNumber,
-      date: new Date(data.date),
-      department: data.department.id,
-      status: data.status.id,
+      fullName: data?.fullName,
+      nationalCode: data?.nationalCode,
+      phoneNumber: data?.phoneNumber,
+      date: data?.date ? new Date(data.date) : new Date(),
+      department: data?.department.$id,
+      status: data?.status.id,
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (data2: addNewAppointmentFormType) => {
-      // await onSubmit(data2);
-    },
+    mutationFn: async (data2: addNewAppointmentFormType) =>
+      updateAppointment(data2, data?.id ?? "", departments),
   });
 
   const handleSubmit: SubmitHandler<addNewAppointmentFormType> = async (
@@ -69,6 +73,7 @@ export default function EditAppointmentDialog({
       });
 
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("ویرایش نوبت ناموفق بود", {
         description: `متأسفانه اطلاعات نوبت «${formData.fullName}» به‌روزرسانی نشد. لطفاً دوباره تلاش کنید.`,
@@ -83,12 +88,12 @@ export default function EditAppointmentDialog({
         if (!form.formState.isSubmitting) {
           if (nextOpen) {
             form.reset({
-              fullName: data.fullName,
-              nationalCode: data.nationalCode,
-              phoneNumber: data.phoneNumber,
-              date: new Date(data.date),
-              department: data.department.id,
-              status: data.status.id,
+              fullName: data?.fullName,
+              nationalCode: data?.nationalCode,
+              phoneNumber: data?.phoneNumber,
+              date: data?.date ? new Date(data.date) : new Date(),
+              department: data?.department.$id,
+              status: data?.status.id,
             });
           }
 
@@ -193,7 +198,7 @@ export default function EditAppointmentDialog({
                     </SelectTrigger>
                     <SelectContent>
                       {departments.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
+                        <SelectItem key={item.$id} value={item.$id}>
                           {item.name}
                         </SelectItem>
                       ))}
