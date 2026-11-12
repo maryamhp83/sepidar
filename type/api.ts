@@ -1,4 +1,10 @@
 import { Models } from "appwrite";
+import {
+  AppointmentsChartCardProps,
+  BedOccupancyCardProps,
+  RecentAppointmentsTableProps,
+  RecentHospitolizedTableProps,
+} from "./component";
 
 export interface GETPatient extends Models.Row {
   fullName: string;
@@ -54,4 +60,18 @@ export interface GETInvoices extends Models.Row {
   totalPrice: number;
   payed: number;
   status: "payed" | "not-payed";
+}
+
+export interface GETDashboard {
+  chart: AppointmentsChartCardProps["data"];
+  bedOccupancy: BedOccupancyCardProps["data"];
+
+  stats: {
+    patients: number;
+    doctors: number;
+    departments: number;
+    appointments: number;
+    beds: number;
+    totalRevenue: number;
+  };
 }
