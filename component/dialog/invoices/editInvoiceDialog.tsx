@@ -25,25 +25,35 @@ import { toast } from "sonner";
 import { Field, FieldError, FieldLabel } from "@/component/ui/field";
 import { Input } from "@/component/ui/input";
 import { Textarea } from "@/component/ui/textarea";
+import { updateInvoice } from "@/lib/api/invoices";
 
-export default function EditInvoiceDialog({ data }: EditInvoiceDialogProps) {
+export default function EditInvoiceDialog({
+  data,
+  refetch,
+}: EditInvoiceDialogProps) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<AddNewInvoiceFormType>({
     resolver: zodResolver(AddNewInvoiceFormSchema),
     defaultValues: {
-      fullName: data.fullName,
-      description: data.description,
-      totalPrice: data.totalPrice,
-      payed: data.payed,
-      status: data.status,
+      fullName: data?.fullName,
+      description: data?.description,
+      totalPrice: data?.totalPrice,
+      payed: data?.payed,
+      status: data?.status,
     },
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: AddNewInvoiceFormType) => {
-      // await onSubmit(data);
-    },
+    mutationFn: async (formData: AddNewInvoiceFormType) =>
+      updateInvoice(
+        {
+          ...formData,
+          status:
+            formData.totalPrice === formData.payed ? "payed" : "not-payed",
+        },
+        data?.id ?? "",
+      ),
   });
 
   const handleSubmit: SubmitHandler<AddNewInvoiceFormType> = async (data) => {
@@ -55,6 +65,7 @@ export default function EditInvoiceDialog({ data }: EditInvoiceDialogProps) {
       });
 
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("ویرایش فاکتور ناموفق بود", {
         description: `متأسفانه اطلاعات فاکتور بیمار «${data.fullName}» به‌روزرسانی نشد. لطفاً دوباره تلاش کنید.`,

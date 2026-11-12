@@ -27,7 +27,6 @@ import {
   TableRow,
 } from "../ui/table";
 import { cn } from "cn";
-import { digitsEnToFa } from "@persian-tools/persian-tools";
 import { Badge } from "../ui/badge";
 import DatePicker from "../ui/datePicker";
 import { persianNoTimeDateFormatter } from "@/lib/date";
@@ -38,6 +37,7 @@ import { formatPersianNumber } from "@/lib/number";
 export default function InvoicesFilterableTable({
   data,
   className,
+  refetch,
 }: InvoicesFilterableTableProps) {
   const [searchStr, setSearchStr] = useState("");
   const [statusFilter, setStatusFilter] = useState("همه");
@@ -184,8 +184,8 @@ export default function InvoicesFilterableTable({
                 </TableCell>
 
                 <TableCell className="flex items-center justify-end gap-2">
-                  <EditInvoiceDialog data={item} />
-                  <DeleteInvoiceDialog data={item} />
+                  <EditInvoiceDialog data={item} refetch={refetch} />
+                  <DeleteInvoiceDialog data={item} refetch={refetch} />
                 </TableCell>
               </TableRow>
             ))}

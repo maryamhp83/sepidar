@@ -47,3 +47,11 @@ export interface GETMedicalRecords extends Models.Row {
   status: string; // strigified type of Status
   department: string; // strigified type of Department
 }
+
+export interface GETInvoices extends Models.Row {
+  fullName: string;
+  description: string;
+  totalPrice: number;
+  payed: number;
+  status: "payed" | "not-payed";
+}

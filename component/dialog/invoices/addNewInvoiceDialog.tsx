@@ -15,7 +15,7 @@ import {
   AddNewInvoiceFormSchema,
   AddNewInvoiceFormType,
 } from "@/lib/formSchema";
-import { ClassOnlyProps } from "@/type/component";
+import { AddNewInvoiceDialogProps } from "@/type/component";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Plus } from "lucide-react";
@@ -25,8 +25,12 @@ import { toast } from "sonner";
 import { Field, FieldError, FieldLabel } from "@/component/ui/field";
 import { Input } from "@/component/ui/input";
 import { Textarea } from "@/component/ui/textarea";
+import { createInvoice } from "@/lib/api/invoices";
 
-export default function AddNewInvoiceDialog({ className }: ClassOnlyProps) {
+export default function AddNewInvoiceDialog({
+  className,
+  refetch,
+}: AddNewInvoiceDialogProps) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<AddNewInvoiceFormType>({
@@ -41,9 +45,11 @@ export default function AddNewInvoiceDialog({ className }: ClassOnlyProps) {
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: AddNewInvoiceFormType) => {
-      // await onSubmit(data);
-    },
+    mutationFn: async (data: AddNewInvoiceFormType) =>
+      createInvoice({
+        ...data,
+        status: data.totalPrice === data.payed ? "payed" : "not-payed",
+      }),
   });
 
   const handleSubmit: SubmitHandler<AddNewInvoiceFormType> = async (data) => {
@@ -56,6 +62,7 @@ export default function AddNewInvoiceDialog({ className }: ClassOnlyProps) {
 
       form.reset();
       setOpen(false);
+      refetch?.();
     } catch {
       toast.error("ثبت فاکتور ناموفق بود", {
         description: `متأسفانه فاکتور بیمار «${data.fullName}» ثبت نشد. لطفاً دوباره تلاش کنید.`,

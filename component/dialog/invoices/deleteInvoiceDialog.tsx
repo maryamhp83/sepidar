@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/component/ui/dialog";
+import { deleteInvoice } from "@/lib/api/invoices";
 import { DeleteInvoiceDialogProps } from "@/type/component";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2, Trash } from "lucide-react";
@@ -19,19 +20,19 @@ import { toast } from "sonner";
 
 export default function DeleteInvoiceDialog({
   data,
+  refetch,
 }: DeleteInvoiceDialogProps) {
   const [open, setOpen] = useState(false);
 
   const mutation = useMutation({
-    mutationFn: async () => {
-      // await onSubmit(data.id);
-    },
+    mutationFn: () => deleteInvoice(data?.id ?? ""),
     onSuccess: () => {
       toast.success("فاکتور با موفقیت حذف شد", {
-        description: `فاکتور بیمار «${data.fullName}» با موفقیت از سیستم حذف شد.`,
+        description: `فاکتور بیمار «${data?.fullName ?? "-"}» با موفقیت از سیستم حذف شد.`,
       });
 
       setOpen(false);
+      refetch?.();
     },
     onError: () => {
       toast.error("حذف فاکتور ناموفق بود", {
@@ -61,8 +62,8 @@ export default function DeleteInvoiceDialog({
         <DialogHeader>
           <DialogTitle>حذف فاکتور</DialogTitle>
           <DialogDescription>
-            آیا از حذف فاکتور بیمار «{data.fullName}» اطمینان دارید؟ این عملیات
-            قابل بازگشت نیست.
+            آیا از حذف فاکتور بیمار «{data?.fullName ?? "-"}» اطمینان دارید؟ این
+            عملیات قابل بازگشت نیست.
           </DialogDescription>
         </DialogHeader>
 

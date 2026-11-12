@@ -144,7 +144,7 @@ export type AddNewDepartmentDialogProps = APIDialogProps<undefined>;
 export type AddNewAppointmentDialogProps = APIDialogProps<undefined>;
 export type AddNewBedDialogProps = APIDialogProps<undefined>;
 export type AddNewMedicalRecordDialogProps = APIDialogProps<undefined>;
-export type AddNewInvoiceRecordDialogProps = APIDialogProps<undefined>;
+export type AddNewInvoiceDialogProps = APIDialogProps<undefined>;
 
 export type EditPatientDialogProps = APIDialogProps<PatientType>;
 export type EditAppointmentDialogProps = APIDialogProps<AppointmentType>;
