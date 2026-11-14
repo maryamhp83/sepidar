@@ -1,36 +1,267 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# سپیدار | Sepidar
 
-## Getting Started
+**سامانه مدیریت بیمارستان**
 
-First, run the development server:
+سپیدار یک سامانه تحت وب برای مدیریت و سازمان‌دهی فرایندهای روزمره بیمارستان است. این سامانه با هدف یکپارچه‌سازی اطلاعات و ساده‌سازی عملیات مدیریتی، امکاناتی برای مدیریت بیماران، پزشکان، بخش‌های بیمارستان، نوبت‌ها، تخت‌ها، پرونده‌های پزشکی و صورت‌حساب‌ها فراهم می‌کند.
+
+این پروژه با استفاده از Next.js، TypeScript، Tailwind CSS و Appwrite توسعه داده شده و دارای رابط کاربری فارسی، طراحی راست‌چین (RTL) و پشتیبانی از تم روشن و تاریک است.
+
+## امکانات سامانه
+
+### داشبورد مدیریتی
+
+- نمایش آمار کلی بیمارستان.
+- نمایش تعداد بیماران، پزشکان، بخش‌ها و نوبت‌ها.
+- نمودار فعالیت ماهانه بیماران و نوبت‌ها.
+- نمایش وضعیت اشغال تخت‌های بیمارستان.
+- نمایش اطلاعات مالی و درآمد حاصل از صورت‌حساب‌ها.
+
+### مدیریت بیماران
+
+- ثبت، ویرایش و حذف اطلاعات بیماران.
+- نگهداری اطلاعات هویتی و اطلاعات تماس.
+- اختصاص بیماران به بخش‌های بیمارستان.
+- مدیریت وضعیت بیماران.
+- جست‌وجو و فیلتر اطلاعات بیماران.
+
+### مدیریت پزشکان
+
+- ثبت و مدیریت اطلاعات پزشکان.
+- نگهداری اطلاعات تماس و کد ملی.
+- اختصاص پزشکان به بخش‌های بیمارستان.
+- مدیریت وضعیت فعالیت پزشکان.
+
+### مدیریت بخش‌ها
+
+- ایجاد، ویرایش و حذف بخش‌های بیمارستان.
+- ثبت نام و توضیحات هر بخش.
+- استفاده از بخش‌ها در سایر قسمت‌های سامانه.
+
+### مدیریت نوبت‌ها
+
+- ثبت و مدیریت نوبت‌های بیماران.
+- اختصاص نوبت به بخش‌های بیمارستان.
+- نمایش نوبت‌ها در تقویم.
+- مدیریت وضعیت نوبت‌ها.
+
+### مدیریت تخت‌ها و بستری
+
+- ثبت و مدیریت اطلاعات بستری بیماران.
+- ثبت تاریخ پذیرش و ترخیص.
+- اختصاص بیماران به بخش‌های بیمارستان.
+- پیگیری وضعیت بستری.
+
+### مدیریت پرونده‌های پزشکی
+
+- ایجاد و مدیریت پرونده‌های پزشکی.
+- نگهداری اطلاعات هویتی و تماس بیماران.
+- ارتباط پرونده‌ها با بخش‌های بیمارستان.
+- پیگیری تاریخ و وضعیت پرونده‌ها.
+
+### مدیریت صورت‌حساب‌ها
+
+- ایجاد، ویرایش و حذف صورت‌حساب‌ها.
+- ثبت مبلغ کل و مبلغ پرداخت‌شده.
+- پیگیری وضعیت پرداخت.
+- نمایش اطلاعات مالی و درآمد بیمارستان.
+
+### احراز هویت و تنظیمات
+
+- ثبت‌نام و ورود کاربران.
+- بازیابی رمز عبور.
+- مدیریت اطلاعات حساب کاربری.
+- تغییر اطلاعات حساب و رمز عبور.
+
+### تجربه کاربری
+
+- رابط کاربری کاملاً فارسی و راست‌چین.
+- طراحی واکنش‌گرا (Responsive).
+- پشتیبانی از تم روشن و تاریک.
+- اعتبارسنجی فرم‌ها.
+- نمایش اعلان‌های تعاملی برای عملیات مختلف.
+
+## فناوری‌های استفاده‌شده
+
+| فناوری             | کاربرد                               |
+| ------------------ | ------------------------------------ |
+| Next.js 16         | فریم‌ورک اصلی و مسیریابی             |
+| React 19           | توسعه رابط کاربری                    |
+| TypeScript         | تایپ‌گذاری ایستا و افزایش اطمینان کد |
+| Tailwind CSS 4     | طراحی و استایل‌دهی                   |
+| shadcn/ui          | کامپوننت‌های رابط کاربری             |
+| Appwrite           | احراز هویت و مدیریت پایگاه داده      |
+| TanStack Query     | مدیریت وضعیت داده‌های سرور           |
+| React Hook Form    | مدیریت فرم‌ها                        |
+| Zod                | اعتبارسنجی داده‌ها                   |
+| ECharts و Recharts | نمایش نمودارها و آمار                |
+| Motion             | ایجاد انیمیشن                        |
+| Sonner             | نمایش اعلان‌ها                       |
+| Lucide React       | آیکون‌ها                             |
+| date-fns-jalali    | مدیریت تاریخ شمسی                    |
+
+## ساختار پروژه
+
+ساختار پروژه بر اساس معماری کامپوننت‌محور طراحی شده است. مسئولیت مسیریابی، دریافت اطلاعات، نمایش رابط کاربری و ارتباط با پایگاه داده در بخش‌های مجزا قرار گرفته‌اند.
+
+```text
+app/
+├── auth/
+│   ├── login/
+│   ├── signup/
+│   └── recovery/
+├── appointments/
+├── beds/
+├── departments/
+├── doctors/
+├── invoices/
+├── medical-records/
+├── patients/
+├── settings/
+├── globals.css
+├── layout.tsx
+└── page.tsx
+
+component/
+├── card/
+├── container/
+├── dialog/
+├── form/
+├── guard/
+├── layout/
+├── provider/
+├── table/
+└── ui/
+
+context/
+├── authFetchContext.tsx
+└── departmentsFetchContext.tsx
+
+data/
+lib/
+├── api/
+├── formSchema.ts
+├── date.ts
+├── number.ts
+└── util.ts
+
+type/
+```
+
+### معماری و جریان داده‌ها
+
+ساختار کلی ارتباط بخش‌های مختلف سامانه به این صورت است:
+
+1. مسیریابی صفحات توسط Next.js App Router انجام می‌شود.
+2. کامپوننت‌های Container مسئول ترکیب اجزای صفحات و دریافت اطلاعات هستند.
+3. TanStack Query مدیریت درخواست‌های غیرهم‌زمان و وضعیت داده‌های سرور را بر عهده دارد.
+4. جداول و دیالوگ‌های قابل استفاده مجدد برای نمایش و مدیریت اطلاعات استفاده می‌شوند.
+5. ماژول‌های API مسئول برقراری ارتباط با پایگاه داده Appwrite هستند.
+6. Appwrite وظیفه احراز هویت و ذخیره‌سازی اطلاعات را بر عهده دارد.
+
+این ساختار باعث جداسازی منطق دریافت و مدیریت داده‌ها از رابط کاربری و نگهداری آسان‌تر بخش‌های مختلف سامانه می‌شود.
+
+## راه‌اندازی پروژه
+
+### پیش‌نیازها
+
+- نصب Node.js (ترجیحاً نسخه LTS).
+- نصب npm.
+- ایجاد یک پروژه در Appwrite.
+- ایجاد پایگاه داده و جداول موردنیاز در Appwrite TablesDB.
+
+### دریافت پروژه
+
+ابتدا مخزن پروژه را دریافت کنید:
+
+```bash
+git clone https://github.com/maryamhp83/sepidar.git
+```
+
+وارد پوشه پروژه شوید:
+
+```bash
+cd sepidar
+```
+
+وابستگی‌های پروژه را نصب کنید:
+
+```bash
+npm install
+```
+
+### تنظیم متغیرهای محیطی
+
+در مسیر اصلی پروژه، فایل `.env.local` ایجاد کرده و متغیرهای زیر را در آن قرار دهید:
+
+```env
+NEXT_PUBLIC_APPWRITE_ENDPOINT=
+NEXT_PUBLIC_APPWRITE_PROJECT_ID=
+
+NEXT_PUBLIC_APPWRITE_DATABASE_ID=
+
+NEXT_PUBLIC_APPWRITE_BEDS_TABLE_ID=
+NEXT_PUBLIC_APPWRITE_PATIENTS_TABLE_ID=
+NEXT_PUBLIC_APPWRITE_DOCTORS_TABLE_ID=
+NEXT_PUBLIC_APPWRITE_DEPARTMENTS_TABLE_ID=
+NEXT_PUBLIC_APPWRITE_APPOINTMENTS_TABLE_ID=
+NEXT_PUBLIC_APPWRITE_MEDICAL_RECORDS_TABLE_ID=
+NEXT_PUBLIC_APPWRITE_INVOICES_TABLE_ID=
+```
+
+مقادیر مربوط به Endpoint، شناسه پروژه، شناسه پایگاه داده و شناسه جداول را از پنل Appwrite دریافت و جایگزین کنید.
+
+### پیکربندی Appwrite
+
+پیش از اجرای پروژه، منابع زیر را در Appwrite ایجاد و پیکربندی کنید:
+
+- ایجاد پروژه در Appwrite.
+- تنظیم سرویس احراز هویت و حساب‌های کاربری.
+- ایجاد پایگاه داده از نوع TablesDB.
+- ایجاد جداول بیماران، پزشکان، بخش‌ها، نوبت‌ها، تخت‌ها، پرونده‌های پزشکی و صورت‌حساب‌ها.
+- تعریف ستون‌های هر جدول مطابق با ساختار داده‌های موجود در TypeScript و ماژول‌های API پروژه.
+- تنظیم دسترسی‌های مناسب برای پایگاه داده و جداول.
+
+### اجرای پروژه در محیط توسعه
+
+برای اجرای سرور توسعه دستور زیر را اجرا کنید:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+سپس از طریق آدرس زیر به سامانه دسترسی خواهید داشت:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## دستورات قابل استفاده
 
-## Learn More
+| دستور           | توضیحات                   |
+| --------------- | ------------------------- |
+| `npm run dev`   | اجرای سرور توسعه          |
+| `npm run build` | ساخت نسخه بهینه‌شده پروژه |
+| `npm run start` | اجرای نسخه Production     |
+| `npm run lint`  | بررسی کدها با ESLint      |
 
-To learn more about Next.js, take a look at the following resources:
+## استقرار و انتشار
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+این پروژه قابلیت استقرار روی پلتفرم‌های پشتیبان Next.js، از جمله Vercel را دارد.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+مراحل استقرار در Vercel:
 
-## Deploy on Vercel
+1. مخزن پروژه را به Vercel متصل کنید.
+2. متغیرهای محیطی موردنیاز را در تنظیمات پروژه وارد کنید.
+3. فرایند Deploy را اجرا کنید.
+4. دامنه منتشرشده را در تنظیمات مجاز Appwrite قرار دهید تا ارتباط با سرویس‌های آن برقرار شود.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## اطلاعات پروژه
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+سپیدار به‌عنوان پروژه پایانی دوره کاردانی رشته مهندسی کامپیوتر توسعه داده شده است.
+
+هدف از پیاده‌سازی این پروژه، طراحی و توسعه یک سامانه مدیریتی تحت وب با استفاده از فناوری‌های مدرن توسعه فرانت‌اند، معماری کامپوننت‌محور، مدیریت وضعیت، اعتبارسنجی فرم‌ها، ارتباط با پایگاه داده و طراحی رابط کاربری واکنش‌گرا بوده است.
+
+**مخزن پروژه:**  
+https://github.com/maryamhp83/sepidar
+
+---
+
+_سپیدار؛ گامی در جهت هوشمندسازی و بهبود مدیریت فرایندهای بیمارستانی._
