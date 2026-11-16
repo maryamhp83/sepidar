@@ -15,7 +15,7 @@ export default function MedicalRecordsPage() {
       <StaticBreadCrumb className="mb-5" values={["سپیدار", title]} />
       <h1 className="font-bold text-xl truncate mb-1">{title}</h1>
       <span className="font-normal text-sm text-muted-foreground block mb-8">
-        مدیریت تنظیمات سامانه، اعلان‌ها و دسترسی‌ها
+        مدیریت تنظیمات سامانه،
       </span>
       <SettingsForm />
     </MainLayout>
