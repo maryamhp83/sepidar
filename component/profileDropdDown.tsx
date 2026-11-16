@@ -58,7 +58,7 @@ export default function ProfileDropdown({ className }: ClassOnlyProps) {
               </Button>
             }
           />
-          <DropdownMenuContent>
+          <DropdownMenuContent className={"lg:w-full w-50"}>
             <DropdownMenuItem
               render={
                 <Link href={"/settings"}>
