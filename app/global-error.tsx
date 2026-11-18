@@ -1,7 +1,6 @@
 "use client";
 
-import "./globals.css"; // adjust the path to your global stylesheet
-
+import "./globals.css";
 import { Button } from "@/component/ui/button";
 import { Card, CardHeader, CardTitle } from "@/component/ui/card";
 import {

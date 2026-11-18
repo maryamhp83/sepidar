@@ -81,7 +81,6 @@ export default function DashboardPageContainer() {
           className="lg:col-span-4"
           data={data?.chart ?? []}
         />
-
         <BedOccupancyCard
           className="lg:col-span-2"
           data={
